@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/finalConsonant/static/css/main.399107c5.css",
+    "main.js": "/finalConsonant/static/js/main.c63011c5.js",
+    "static/js/453.5e560239.chunk.js": "/finalConsonant/static/js/453.5e560239.chunk.js",
+    "index.html": "/finalConsonant/index.html",
+    "main.399107c5.css.map": "/finalConsonant/static/css/main.399107c5.css.map",
+    "main.c63011c5.js.map": "/finalConsonant/static/js/main.c63011c5.js.map",
+    "453.5e560239.chunk.js.map": "/finalConsonant/static/js/453.5e560239.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.399107c5.css",
+    "static/js/main.c63011c5.js"
+  ]
+}
