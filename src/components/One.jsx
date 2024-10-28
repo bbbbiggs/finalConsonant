@@ -7,6 +7,7 @@ const One = () => {
   const [initialStatus2, setInitialStatus2] = useState(false);
   const [initialStatus3, setInitialStatus3] = useState(false);
   const [QuizNumber, setQuizNumber] = useState(0);
+  const [show, setShow] = useState(false);
   const handleDrop = (e) => {
     e.preventDefault();
     const droppedValue = e.dataTransfer.getData("text/plain"); // 드래그된 값 가져오기
@@ -24,6 +25,7 @@ const One = () => {
       // alert("!");
       setInitialStatus(true);
       setQuizNumber((QuizNumber) => QuizNumber + 1);
+      setShow(true);
     } else if (droppedValue === "rieul" && value === "foot") {
       setInitialStatus2(true);
       setQuizNumber((QuizNumber) => QuizNumber + 1);
@@ -46,8 +48,7 @@ const One = () => {
         <hr />
         <p>빈칸에 알맞은 받침을 넣어 낱말을 완성해 봅시다.</p>
         <br />
-
-        <ImgSyllableWrapper>
+        <ImgSyllableWrapper addShowClass="show">
           <img
             src={`${process.env.PUBLIC_URL}/assets/images/mouseImg.png`}
             alt=""
@@ -60,55 +61,43 @@ const One = () => {
             dataValue={"mouse"}
           />
         </ImgSyllableWrapper>
+        <ImgSyllableWrapper addShowClass={QuizNumber >= 1 ? "show" : undefined}>
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/images/footImg.png`}
+            alt=""
+            draggable={false}
+          />
+          <Syllable
+            handleDrop={handleDrop}
+            status={initialStatus2}
+            dataValue={"foot"}
+          />
+        </ImgSyllableWrapper>
+        <ImgSyllableWrapper addShowClass={QuizNumber >= 2 ? "show" : undefined}>
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/images/momImg.png`}
+            alt=""
+            draggable={false}
+          />
 
-        {QuizNumber >= 1 && (
-          <>
-            <ImgSyllableWrapper>
-              <img
-                src={`${process.env.PUBLIC_URL}/assets/images/footImg.png`}
-                alt=""
-                draggable={false}
-              />
-              <Syllable
-                handleDrop={handleDrop}
-                status={initialStatus2}
-                dataValue={"foot"}
-              />
-            </ImgSyllableWrapper>
-          </>
-        )}
-        {QuizNumber >= 2 && (
-          <>
-            <ImgSyllableWrapper>
-              <img
-                src={`${process.env.PUBLIC_URL}/assets/images/momImg.png`}
-                alt=""
-                draggable={false}
-              />
-
-              <div className="wordWrapper">
-                <Syllable
-                  handleDrop={handleDrop}
-                  status={initialStatus3}
-                  dataValue={"mom1"}
-                />
-                <Syllable
-                  handleDrop={handleDrop}
-                  status={true}
-                  dataValue={"mom2"}
-                />
-              </div>
-            </ImgSyllableWrapper>
-          </>
-        )}
-        {/* <hr /> */}
-        <br />
-
+          <div className="wordWrapper">
+            <Syllable
+              handleDrop={handleDrop}
+              status={initialStatus3}
+              dataValue={"mom1"}
+            />
+            <Syllable
+              handleDrop={handleDrop}
+              status={true}
+              dataValue={"mom2"}
+            />
+          </div>
+        </ImgSyllableWrapper>
+        <hr />
         <div className="dragItemsWrapper">
           <img
             src={`${process.env.PUBLIC_URL}/assets/images/c_bieup.png`}
             alt=""
-            // draggable
             onDragStart={(e) => handleDragStart(e, "bieup")}
           />
           <img

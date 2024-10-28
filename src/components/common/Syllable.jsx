@@ -36,6 +36,13 @@ const StyledSyllable = styled.div`
     position: relative;
     z-index: 1;
   }
+  .fade-in {
+    /* opacity: 0; */
+    transition: opacity 0.5s ease-in-out;
+  }
+  .fade-in.show {
+    opacity: 1;
+  }
 `;
 
 const Syllable = (data) => {
@@ -46,6 +53,7 @@ const Syllable = (data) => {
     >
       <img
         data-value={data.dataValue}
+        className="fade-in"
         src={`${process.env.PUBLIC_URL}/assets/images/${
           data.status ? data.dataValue : data.dataValue + "_before"
         }.png`}

@@ -6,13 +6,34 @@ const StyledImgSyllableWrapper = styled.div`
   display: inline-block;
   text-align: center;
   margin-right: 10px;
+  transition: opacity 0.5s ease-in-out;
+
+  opacity: ${(props) => {
+    if (props.$show === "show") return "1";
+    //   {
+    //   console.log(1123123, props.$show);
+    // }
+    else {
+      return "0";
+    }
+  }};
+
   > img {
     width: 150px;
+  }
+  .wordWrapper {
+    display: flex;
   }
 `;
 
 const ImgSyllableWrapper = (data) => {
-  return <StyledImgSyllableWrapper>{data.children}</StyledImgSyllableWrapper>;
+  console.log(1111, data.$show);
+
+  return (
+    <StyledImgSyllableWrapper $show={data.addShowClass}>
+      {data.children}
+    </StyledImgSyllableWrapper>
+  );
 };
 
 export default ImgSyllableWrapper;
