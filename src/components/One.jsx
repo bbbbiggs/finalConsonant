@@ -7,25 +7,24 @@ const One = () => {
   const [initialStatus2, setInitialStatus2] = useState(false);
   const [initialStatus3, setInitialStatus3] = useState(false);
   const [QuizNumber, setQuizNumber] = useState(0);
-  const [show, setShow] = useState(false);
   const handleDrop = (e) => {
     e.preventDefault();
     const droppedValue = e.dataTransfer.getData("text/plain"); // 드래그된 값 가져오기
+    const value = e.target.getAttribute("data-value");
+
     // alert("드롭되었습니다!");
-    console.log("드래그한 이미지", droppedValue);
+    // console.log("드래그한 이미지", droppedValue);
 
     // const mouseValue =
     //   document.querySelectorAll(".syllable .mouse").dataset.value;
     // console.log("mousevalue:", mouseValue);
 
-    const value = e.target.getAttribute("data-value");
-    console.log(value);
+    // console.log(value);
 
     if (droppedValue === "bieup" && value === "mouse") {
       // alert("!");
       setInitialStatus(true);
       setQuizNumber((QuizNumber) => QuizNumber + 1);
-      setShow(true);
     } else if (droppedValue === "rieul" && value === "foot") {
       setInitialStatus2(true);
       setQuizNumber((QuizNumber) => QuizNumber + 1);
@@ -33,7 +32,7 @@ const One = () => {
       setInitialStatus3(true);
       setQuizNumber((QuizNumber) => QuizNumber + 1);
     }
-    console.log(QuizNumber);
+    // console.log(QuizNumber);
   };
 
   const handleDragStart = (e, value) => {
@@ -48,7 +47,7 @@ const One = () => {
         <hr />
         <p>빈칸에 알맞은 받침을 넣어 낱말을 완성해 봅시다.</p>
         <br />
-        <ImgSyllableWrapper addShowClass="show">
+        <ImgSyllableWrapper show="show">
           <img
             src={`${process.env.PUBLIC_URL}/assets/images/mouseImg.png`}
             alt=""
@@ -61,7 +60,7 @@ const One = () => {
             dataValue={"mouse"}
           />
         </ImgSyllableWrapper>
-        <ImgSyllableWrapper addShowClass={QuizNumber >= 1 ? "show" : undefined}>
+        <ImgSyllableWrapper show={QuizNumber >= 1 ? "show" : undefined}>
           <img
             src={`${process.env.PUBLIC_URL}/assets/images/footImg.png`}
             alt=""
@@ -73,7 +72,7 @@ const One = () => {
             dataValue={"foot"}
           />
         </ImgSyllableWrapper>
-        <ImgSyllableWrapper addShowClass={QuizNumber >= 2 ? "show" : undefined}>
+        <ImgSyllableWrapper show={QuizNumber >= 2 ? "show" : undefined}>
           <img
             src={`${process.env.PUBLIC_URL}/assets/images/momImg.png`}
             alt=""

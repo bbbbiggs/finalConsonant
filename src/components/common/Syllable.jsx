@@ -53,7 +53,6 @@ const Syllable = (data) => {
     >
       <img
         data-value={data.dataValue}
-        className="fade-in"
         src={`${process.env.PUBLIC_URL}/assets/images/${
           data.status ? data.dataValue : data.dataValue + "_before"
         }.png`}

@@ -27,10 +27,8 @@ const StyledImgSyllableWrapper = styled.div`
 `;
 
 const ImgSyllableWrapper = (data) => {
-  console.log(1111, data.$show);
-
   return (
-    <StyledImgSyllableWrapper $show={data.addShowClass}>
+    <StyledImgSyllableWrapper $show={data.show}>
       {data.children}
     </StyledImgSyllableWrapper>
   );
