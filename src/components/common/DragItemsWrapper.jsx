@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 const StyledDragItemsWrapper = styled.div`
   background-color: antiquewhite;
+  width: 100%;
   img {
-    width: 50px;
+    width: 78px;
     border: 1px solid black;
     margin-right: 10px;
     /* display: block; */

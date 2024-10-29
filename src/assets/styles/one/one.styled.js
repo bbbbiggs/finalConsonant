@@ -1,12 +1,21 @@
 import styled from "styled-components";
 export const StyledOne = styled.div`
-  display: flex;
+  overflow-x: hidden;
+  /* display: flex; */
   /* flex-direction: row; */
-
-  .backgroundColor {
-    /* min-height: 100vh; */
-    background-color: #fef7ea;
-    width: 700px;
+  @media (min-width: 1025px) {
+    .backgroundColor {
+      /* min-height: 100vh; */
+      background-color: #fef7ea;
+      width: 700px;
+    }
+  }
+  @media (max-width: 1024px) {
+    .backgroundColor {
+      /* min-height: 100vh; */
+      background-color: #fef7ea;
+      /* width: 700px; */
+    }
   }
   .contentWrapper {
     width: 90%;

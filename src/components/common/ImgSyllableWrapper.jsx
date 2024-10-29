@@ -3,7 +3,10 @@ import { StyledImgSyllableWrapper } from "../../assets/styles/common/imgSyllable
 
 const ImgSyllableWrapper = (data) => {
   return (
-    <StyledImgSyllableWrapper $show={data.show}>
+    <StyledImgSyllableWrapper
+      $show={data.show}
+      className={data.shake === "shake" ? "shake" : ""}
+    >
       {data.children}
     </StyledImgSyllableWrapper>
   );

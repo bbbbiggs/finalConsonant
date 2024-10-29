@@ -2,6 +2,54 @@
   margin: 0;
 }
 
-.hidden {
-  display: none;
+.borderAnimation {
+  border: 3px outset red;
+  animation: borderAnimation 1s infinite;
+}
+
+@keyframes borderAnimation {
+  from {
+    border-color: red;
+  }
+  to {
+    border-color: blue;
+  }
+}
+
+/* 흔들림 효과 */
+.shake {
+  animation: shakeAnimation 0.5s ease;
+}
+
+@keyframes shakeAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* 빨간색으로 깜빡이는 효과 */
+.flash {
+  animation: flashAnimation 0.5s ease;
+}
+
+@keyframes flashAnimation {
+  0%,
+  100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: red;
+  }
 }
