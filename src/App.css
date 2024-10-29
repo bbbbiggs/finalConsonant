@@ -2,39 +2,6 @@
   margin: 0;
 }
 
-.backgroundColor {
-  /* width: 100%;
-  height: 100%; */
-  min-height: 100vh;
-  background-color: #fef7ea;
-}
-.contentWrapper {
-  width: 90%;
-  margin: auto;
-  position: relative;
-  top: 20px;
-  /* background-color: yellow; */
-}
-hr {
-  margin: 5px 0;
-}
-
-.quizWrapper {
-  /* background-color: yellow; */
-  display: inline-block;
-  text-align: center;
-  margin-right: 10px;
-}
-.quizWrapper img {
-  width: 150px;
-}
-
-.dragItemsWrapper {
-  width: 100%;
-  background-color: antiquewhite;
-}
-.dragItemsWrapper img {
-  width: 100px;
-  border: 1px solid black;
-  margin-right: 10px;
+.hidden {
+  display: none;
 }
