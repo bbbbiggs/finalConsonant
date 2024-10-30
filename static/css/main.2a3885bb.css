@@ -1,0 +1,2 @@
+*{margin:0}.borderAnimation{animation:borderAnimation 1s infinite;border:3px outset red}@keyframes borderAnimation{0%{border-color:red}to{border-color:blue}}.shake{animation:shakeAnimation .5s ease}@keyframes shakeAnimation{0%{transform:translateX(0)}25%{transform:translateX(-10px)}50%{transform:translateX(10px)}75%{transform:translateX(-10px)}to{transform:translateX(0)}}.flash{animation:flashAnimation .5s ease}@keyframes flashAnimation{0%,to{background-color:initial}50%{background-color:red}}
+/*# sourceMappingURL=main.2a3885bb.css.map*/
