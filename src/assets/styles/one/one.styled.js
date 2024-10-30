@@ -1,6 +1,9 @@
 import styled from "styled-components";
 export const StyledOne = styled.div`
   overflow-x: hidden;
+  display: grid;
+  justify-content: center;
+
   /* display: flex; */
   /* flex-direction: row; */
   @media (min-width: 1025px) {
