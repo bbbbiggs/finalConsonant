@@ -16,6 +16,20 @@
   }
 }
 
+.hintBorderAnimation {
+  /* border: 3px inset yellow; */
+  border: 3px solid yellow;
+  animation: hintBorderAnimation 5s infinite;
+}
+@keyframes hintBorderAnimation {
+  from {
+    border-color: yellow;
+  }
+  to {
+    border-color: #fcf596;
+  }
+}
+
 /* 흔들림 효과 */
 .shake {
   animation: shakeAnimation 0.5s ease;
@@ -26,13 +40,13 @@
     transform: translateX(0);
   }
   25% {
-    transform: translateX(-10px);
+    transform: translateX(-50px);
   }
   50% {
-    transform: translateX(10px);
+    transform: translateX(50px);
   }
   75% {
-    transform: translateX(-10px);
+    transform: translateX(-50px);
   }
   100% {
     transform: translateX(0);
