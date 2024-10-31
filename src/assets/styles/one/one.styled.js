@@ -6,7 +6,7 @@ export const StyledOne = styled.div`
   position: relative;
 
   .answerModalWrapper {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.8);
     width: 100%;
     height: 100%;
     z-index: 2;
@@ -19,8 +19,8 @@ export const StyledOne = styled.div`
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 200px;
-      height: 200px;
+      width: 300px;
+      height: 150px;
       z-index: 3;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -29,7 +29,8 @@ export const StyledOne = styled.div`
       justify-content: center;
       color: black;
       background-color: white;
-      font-size: 30px;
+      font-size: 20px;
+      font-weight: bold;
     }
   }
   .show {

@@ -52,6 +52,13 @@ const Syllable = (data) => {
         draggable={false}
         ref={syllableRef}
       />
+      {data.status && data.dataValue !== "mom2" ? (
+        <svg width="100" height="100" className="circle-draw">
+          <circle cx="50" cy="50" r="40" />
+        </svg>
+      ) : (
+        ""
+      )}
     </StyledSyllable>
   );
 };

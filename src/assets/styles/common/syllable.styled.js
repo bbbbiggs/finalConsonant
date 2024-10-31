@@ -44,4 +44,28 @@ export const StyledSyllable = styled.div`
   .fade-in.show {
     opacity: 1;
   }
+
+  .circle-draw {
+    /* display: block; */
+    margin: auto;
+    transform: rotate(90deg);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  .circle-draw circle {
+    fill: none;
+    stroke: #4caf50;
+    stroke-width: 5;
+    stroke-dasharray: 251.2; /* 원의 둘레 */
+    stroke-dashoffset: 251.2;
+    animation: drawCircle 1s ease-in-out forwards;
+  }
+
+  @keyframes drawCircle {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
 `;

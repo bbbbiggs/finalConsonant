@@ -56,41 +56,14 @@ const One = () => {
   // 정답맞출시
   useEffect(() => {
     if (QuizNumber > 0) {
-      // var defaults = {
-      //   spread: 360,
-      //   ticks: 50,
-      //   gravity: 0,
-      //   decay: 0.94,
-      //   startVelocity: 30,
-      //   colors: ["FFE400", "FFBD00", "E89400", "FFCA6C", "FDFFB8"],
-      // };
-
-      // function shoot() {
-      //   confetti({
-      //     ...defaults,
-      //     particleCount: 40,
-      //     scalar: 1.2,
-      //     shapes: ["star"],
-      //   });
-
-      //   confetti({
-      //     ...defaults,
-      //     particleCount: 10,
-      //     scalar: 0.75,
-      //     shapes: ["circle"],
-      //   });
-      // }
-
-      // setTimeout(shoot, 0);
-      // setTimeout(shoot, 100);
-      // setTimeout(shoot, 200);
-
       setFade("show");
       setShowAnswerModal(true); // 모달 표시
       setTimeout(() => {
         setFade("");
-        setShowAnswerModal(false); // 2초 후에 모달 숨김
-      }, 1000); // 2000ms = 2초
+        setTimeout(() => {
+          setShowAnswerModal(false);
+        }, 500);
+      }, 500);
     }
   }, [QuizNumber]);
 
@@ -111,11 +84,11 @@ const One = () => {
 
   return (
     <StyledOne>
-      {/* {showAnswerModal && (
+      {showAnswerModal && (
         <div className={`answerModalWrapper ${fade}`}>
-          <p>정답입니다!</p>
+          <p>✔️정답입니다!</p>
         </div>
-      )} */}
+      )}
       <div className="backgroundColor">
         <div className="contentWrapper">
           <p>기초국어 | 튼튼2</p>
