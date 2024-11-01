@@ -4,6 +4,7 @@ export const StyledOne = styled.div`
   display: grid;
   justify-content: center;
   position: relative;
+  /* background-color: beige; */
 
   .answerModalWrapper {
     background-color: rgba(255, 255, 255, 0.8);
@@ -37,28 +38,52 @@ export const StyledOne = styled.div`
     opacity: 1;
   }
 
-  .nextPage {
-    width: 100px;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    border: 1px solid #9d0657;
-    border-radius: 20px;
-    background-color: #ec0076;
-    color: white;
-    font-weight: bold;
-    &:hover {
-      cursor: pointer;
-      background-color: #fea443;
+  footer {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #e5e5e5;
+    background-color: #ffccea;
+
+    .circle {
+      background-color: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
     }
+
+    .nextPage {
+      width: 100px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      color: #65558f;
+      font-weight: bold;
+      background-color: #ece6f0;
+      border-radius: 16px;
+
+      box-shadow: var(
+        --m3-elevation-light-3-box-shadow,
+        0px 1px 3px 0px rgba(0, 0, 0, 0.3),
+        0px 4px 8px 3px rgba(0, 0, 0, 0.15)
+      );
+      &:hover {
+        cursor: pointer;
+        background-color: #eddaf9;
+      }
+    }
+  }
+  .backgroundColor {
+    /* min-height: 100vh; */
+    /* background-color: #fef7ea; */
+    width: 700px;
   }
 
   @media (min-width: 1025px) {
-    .backgroundColor {
-      /* min-height: 100vh; */
-      background-color: #fef7ea;
-      width: 700px;
-    }
     .contentWrapper {
       width: 90%;
       /* overflow: hidden; */
@@ -90,11 +115,6 @@ export const StyledOne = styled.div`
     }
   }
   @media (max-width: 1024px) {
-    .backgroundColor {
-      /* min-height: 100vh; */
-      background-color: #fef7ea;
-      /* width: 700px; */
-    }
     .contentWrapper {
       width: 90%;
       /* overflow: hidden; */

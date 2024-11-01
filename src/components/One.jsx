@@ -5,6 +5,7 @@ import DragItemsWrapper from "./common/DragItemsWrapper";
 import { StyledOne } from "../assets/styles/one/one.styled";
 import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const One = () => {
   const [initialStatus, setInitialStatus] = useState([
@@ -72,6 +73,7 @@ const One = () => {
       // console.log(tryCount);
       imgRefs.current[QuizNumber].classList.add("hintBorderAnimation");
       setTimeout(() => {
+        // imgRefs.current[QuizNumber].classList.remove("hintBorderAnimation");
         imgRefs.current[QuizNumber].classList.remove("hintBorderAnimation");
       }, 2000);
     }
@@ -82,13 +84,21 @@ const One = () => {
 
   const nav = useNavigate();
 
+  // const onDragEnd = ({ source, destination }) => {
+  //   console.log(source);
+  //   if (!destination) return;
+  // };
+
   return (
     <StyledOne>
-      {showAnswerModal && (
+      {/* {showAnswerModal && (
         <div className={`answerModalWrapper ${fade}`}>
           <p>✔️정답입니다!</p>
         </div>
-      )}
+      )} */}
+      {/* <DragDropContext onDragEnd={onDragEnd}> */}
+      {/* 드롭이 가능한 영역 */}
+      {/* <Droppable></Droppable> */}
       <div className="backgroundColor">
         <div className="contentWrapper">
           <p>기초국어 | 튼튼2</p>
@@ -178,25 +188,34 @@ const One = () => {
               </div>
             </ImgSyllableWrapper>
           </div>
-
-          <hr />
         </div>
       </div>
+      <br />
       <DragItemsWrapper>
         {consonantArr.map((consonant, index) => (
+          // <Draggable></Draggable>
           <img
             key={consonant}
             ref={(el) => (imgRefs.current[index] = el)}
             src={`${process.env.PUBLIC_URL}/assets/images/c_${consonant}.png`}
             alt=""
+            // draggable={false}
             onDragStart={(e) => handleDragStart(e, consonant)}
           />
         ))}
       </DragItemsWrapper>
+      {/* </DragDropContext> */}
       <br />
-      <div className="nextPage" onClick={() => nav("/two")}>
-        다음페이지
-      </div>
+
+      <footer>
+        <div className="circle">
+          O
+          {/* <img src={`${process.env.PUBLIC_URL}/assets/images/c_.png`} alt="" /> */}
+        </div>
+        <div className="nextPage" onClick={() => nav("/two")}>
+          다음 페이지
+        </div>
+      </footer>
     </StyledOne>
   );
 };
