@@ -45,7 +45,7 @@ export const StyledOne = styled.div`
     justify-content: space-around;
     align-items: center;
     border-top: 1px solid #e5e5e5;
-    background-color: #ffccea;
+    /* background-color: #ffccea; */
 
     .circle {
       background-color: white;
@@ -61,9 +61,9 @@ export const StyledOne = styled.div`
       height: 50px;
       line-height: 50px;
       text-align: center;
-      color: #65558f;
+      color: white;
       font-weight: bold;
-      background-color: #ece6f0;
+      background-color: rgb(88, 167, 0);
       border-radius: 16px;
 
       box-shadow: var(
@@ -73,8 +73,12 @@ export const StyledOne = styled.div`
       );
       &:hover {
         cursor: pointer;
-        background-color: #eddaf9;
+        background-color: rgb(88, 204, 2);
       }
+    }
+
+    &.answerCorrect{
+      background-color: rgb(215, 255, 184)  ;
     }
   }
   .backgroundColor {

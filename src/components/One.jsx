@@ -3,7 +3,6 @@ import ImgSyllableWrapper from "./common/ImgSyllableWrapper";
 import Syllable from "./common/Syllable";
 import DragItemsWrapper from "./common/DragItemsWrapper";
 import { StyledOne } from "../assets/styles/one/one.styled";
-import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
@@ -18,7 +17,7 @@ const One = () => {
   const [isIncorrect, setIsIncorrect] = useState(false);
   const [tryCount, setTryCount] = useState(0);
   const imgRefs = useRef([]);
-  const [showAnswerModal, setShowAnswerModal] = useState(false);
+  const [showAnswerStatus, setShowAnswerStatus] = useState(false);
 
   const answerArr = ["mouse", "foot", "hand", "mom1"];
   const consonantArr = ["bieup", "rieul", "nieun", "mieum"];
@@ -57,14 +56,16 @@ const One = () => {
   // 정답맞출시
   useEffect(() => {
     if (QuizNumber > 0) {
-      setFade("show");
-      setShowAnswerModal(true); // 모달 표시
-      setTimeout(() => {
-        setFade("");
-        setTimeout(() => {
-          setShowAnswerModal(false);
-        }, 500);
-      }, 500);
+      setShowAnswerStatus(true);
+      
+      // setFade("show");
+      // setTimeout(() => {
+      //   setFade("");
+      //   setTimeout(() => {
+      //     setShowAnswerModal(false);
+      //   }, 500);
+      // }, 500);
+
     }
   }, [QuizNumber]);
 
@@ -78,9 +79,6 @@ const One = () => {
       }, 2000);
     }
   }, [tryCount]);
-  const next = () => {
-    alert("1");
-  };
 
   const nav = useNavigate();
 
@@ -207,9 +205,9 @@ const One = () => {
       {/* </DragDropContext> */}
       <br />
 
-      <footer>
+      <footer className={showAnswerStatus ? 'answerCorrect' : ''} >
         <div className="circle">
-          O
+          {showAnswerStatus ? 'O' : '' }
           {/* <img src={`${process.env.PUBLIC_URL}/assets/images/c_.png`} alt="" /> */}
         </div>
         <div className="nextPage" onClick={() => nav("/two")}>
