@@ -6,6 +6,8 @@ const Home = () => {
     <div>
       <Link to={"one"}>낱말완성</Link>
       <br />
+      <Link to={"newone"}>낱말완성리뉴얼</Link>
+      <br />
       <Link to={"two"}>낱말쓰기</Link>
     </div>
   );
