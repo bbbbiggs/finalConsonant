@@ -38,11 +38,11 @@ export const StyledOne = styled.div`
     opacity: 1;
   }
 
-  footer {
+  .answerCorrect {
     width: 100%;
     height: 100px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     border-top: 1px solid #e5e5e5;
     /* background-color: #ffccea; */
@@ -50,10 +50,21 @@ export const StyledOne = styled.div`
     .circle {
       background-color: white;
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      line-height: 50px;
-      text-align: center;
+      width: 70px;
+      height: 70px;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        width: 40px;
+        height: 31px;
+        color: #58a700;
+      }
+    }
+
+    span {
+      font-weight: bold;
     }
 
     .nextPage {
@@ -77,8 +88,52 @@ export const StyledOne = styled.div`
       }
     }
 
-    &.answerCorrect{
-      background-color: rgb(215, 255, 184)  ;
+    &.answerCorrect {
+      background-color: rgb(215, 255, 184);
+    }
+  }
+  /* 틀렸을때 */
+  .answerInCorrect {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid #e5e5e5;
+
+    background-color: rgb(255, 223, 224);
+    .circle {
+      background-color: white;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        width: 40px;
+        height: 31px;
+        color: red;
+      }
+    }
+
+    .nextPage {
+      opacity: 0;
+      width: 100px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      background-color: rgb(255, 75, 75);
+      border-radius: 16px;
+
+      box-shadow: var(
+        --m3-elevation-light-3-box-shadow,
+        0px 1px 3px 0px rgba(0, 0, 0, 0.3),
+        0px 4px 8px 3px rgba(0, 0, 0, 0.15)
+      );
     }
   }
   .backgroundColor {
@@ -87,65 +142,33 @@ export const StyledOne = styled.div`
     width: 700px;
   }
 
-  @media (min-width: 1025px) {
-    .contentWrapper {
-      width: 90%;
-      /* overflow: hidden; */
-      /* height: 700px; */
-      margin: auto;
-      position: relative;
-      padding-top: 20px;
-      /* background-color: yellow; */
-    }
-    hr {
-      margin: 5px 0;
-    }
-
-    .quizWrapper {
-      /* background-color: yellow; */
-      display: inline-block;
-      text-align: center;
-      margin-right: 10px;
-    }
-    .quizWrapper img {
-      width: 150px;
-    }
-
-    .firstWrapper {
-      display: flex;
-      justify-content: center;
-      gap: 50px;
-      /* background-color: yellow; */
-    }
+  .contentWrapper {
+    width: 90%;
+    /* overflow: hidden; */
+    /* height: 700px; */
+    margin: auto;
+    position: relative;
+    padding-top: 20px;
+    /* background-color: yellow; */
   }
-  @media (max-width: 1024px) {
-    .contentWrapper {
-      width: 90%;
-      /* overflow: hidden; */
-      /* height: 700px; */
-      margin: auto;
-      position: relative;
-      padding-top: 20px;
-      /* background-color: yellow; */
-    }
-    hr {
-      margin: 5px 0;
-    }
+  hr {
+    margin: 5px 0;
+  }
 
-    .quizWrapper {
-      /* background-color: yellow; */
-      display: inline-block;
-      text-align: center;
-      margin-right: 10px;
-    }
-    .quizWrapper img {
-      width: 150px;
-    }
+  .quizWrapper {
+    /* background-color: yellow; */
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+  }
+  .quizWrapper img {
+    width: 150px;
+  }
 
-    .firstWrapper {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
+  .firstWrapper {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    /* background-color: yellow; */
   }
 `;

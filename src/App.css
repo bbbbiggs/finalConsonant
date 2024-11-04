@@ -18,9 +18,8 @@
 }
 
 .hintBorderAnimation {
-  /* border: 3px inset yellow; */
-  border: 3px solid yellow;
-  animation: hintBorderAnimation 5s infinite;
+  background-color: gold;
+  animation: hintBorderAnimation 1s infinite;
 }
 @keyframes hintBorderAnimation {
   from {

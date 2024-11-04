@@ -5,6 +5,8 @@ import DragItemsWrapper from "./common/DragItemsWrapper";
 import { StyledOne } from "../assets/styles/one/one.styled";
 import { useNavigate } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 
 const One = () => {
   const [initialStatus, setInitialStatus] = useState([
@@ -17,7 +19,7 @@ const One = () => {
   const [isIncorrect, setIsIncorrect] = useState(false);
   const [tryCount, setTryCount] = useState(0);
   const imgRefs = useRef([]);
-  const [showAnswerStatus, setShowAnswerStatus] = useState(false);
+  const [showAnswerStatus, setShowAnswerStatus] = useState(0);
 
   const answerArr = ["mouse", "foot", "hand", "mom1"];
   const consonantArr = ["bieup", "rieul", "nieun", "mieum"];
@@ -35,17 +37,20 @@ const One = () => {
       consonantValue === consonantArr[QuizNumber] &&
       data_value === answerArr[QuizNumber]
     ) {
+      // 정답시 동그라미효과주기 initialStatus true로 주기
       setInitialStatus((prevStatus) =>
         prevStatus.map((status, index) =>
           index === QuizNumber ? true : status
         )
       );
-      setQuizNumber((QuizNumber) => QuizNumber + 1);
       setTryCount(0);
+      setShowAnswerStatus(true);
     } else {
       setIsIncorrect(true);
       setTimeout(() => setIsIncorrect(false), 500);
       setTryCount((tryCount) => tryCount + 1);
+
+      setShowAnswerStatus(false);
     }
   };
 
@@ -53,39 +58,40 @@ const One = () => {
     e.dataTransfer.setData("text/plain", value); // 드래그 데이터를 설정
   };
 
-  // 정답맞출시
-  useEffect(() => {
-    if (QuizNumber > 0) {
-      setShowAnswerStatus(true);
-      
-      // setFade("show");
-      // setTimeout(() => {
-      //   setFade("");
-      //   setTimeout(() => {
-      //     setShowAnswerModal(false);
-      //   }, 500);
-      // }, 500);
-
-    }
-  }, [QuizNumber]);
-
+  // 2번틀릴시
   useEffect(() => {
     if (tryCount >= 2) {
       // console.log(tryCount);
       imgRefs.current[QuizNumber].classList.add("hintBorderAnimation");
       setTimeout(() => {
-        // imgRefs.current[QuizNumber].classList.remove("hintBorderAnimation");
         imgRefs.current[QuizNumber].classList.remove("hintBorderAnimation");
-      }, 2000);
+      }, 1000);
     }
-  }, [tryCount]);
+  }, [tryCount, QuizNumber]);
+
+  const nextQuiz = () => {
+    // footer 상태값 초기화
+    setShowAnswerStatus(0);
+
+    setTimeout(() => {
+      setQuizNumber((QuizNumber) => QuizNumber + 1);
+    }, 100);
+  };
 
   const nav = useNavigate();
 
-  // const onDragEnd = ({ source, destination }) => {
-  //   console.log(source);
-  //   if (!destination) return;
-  // };
+  // 드래그 시작했을때 실행
+  // useEffect(() => {
+  //   if (tryCount > 0) {
+  //     console.log("옌?");
+  //     if (initialStatus[QuizNumber] === true) {
+  //       console.log("엥", showAnswerStatus);
+  //       setShowAnswerStatus(true);
+  //     } else {
+  //       setShowAnswerStatus(false);
+  //     }
+  //   }
+  // }, [tryCount, showAnswerStatus, initialStatus, QuizNumber]);
 
   return (
     <StyledOne>
@@ -106,7 +112,8 @@ const One = () => {
 
           <div className="firstWrapper">
             <ImgSyllableWrapper
-              show="show"
+              // disappear={disappear}
+              show={"show"}
               shake={`${
                 isIncorrect && initialStatus[0] === false ? "shake" : ""
               }`}
@@ -116,7 +123,6 @@ const One = () => {
                 alt=""
                 draggable={false}
               />
-              {/* 컴포넌트 */}
               <Syllable
                 handleDrop={handleDrop}
                 status={initialStatus[0]}
@@ -158,7 +164,6 @@ const One = () => {
               />
             </ImgSyllableWrapper>
           </div>
-
           <div className="firstWrapper">
             <ImgSyllableWrapper
               show={QuizNumber >= 3 ? "show" : undefined}
@@ -204,16 +209,36 @@ const One = () => {
       </DragItemsWrapper>
       {/* </DragDropContext> */}
       <br />
-
-      <footer className={showAnswerStatus ? 'answerCorrect' : ''} >
-        <div className="circle">
-          {showAnswerStatus ? 'O' : '' }
-          {/* <img src={`${process.env.PUBLIC_URL}/assets/images/c_.png`} alt="" /> */}
-        </div>
-        <div className="nextPage" onClick={() => nav("/two")}>
-          다음 페이지
-        </div>
-      </footer>
+      {showAnswerStatus === true && (
+        <footer className="answerCorrect">
+          <div className="circle">
+            <FontAwesomeIcon icon={faCheck} />
+          </div>
+          <span>정답입니다!</span>
+          {QuizNumber >= 3 ? (
+            <div className="nextPage" onClick={() => nav("/two")}>
+              다음 페이지
+            </div>
+          ) : (
+            <div className="nextPage" onClick={() => nextQuiz()}>
+              계속하기
+            </div>
+          )}
+        </footer>
+      )}
+      {/* {showAnswerStatus === false && (
+        <footer className="answerInCorrect">
+          <div className="circle">
+            <FontAwesomeIcon icon={faX} />
+          </div>
+        </footer>
+      )} */}
+      {/* <div className="nextPage" onClick={() => nav("/two")}>
+      다음 페이지
+      </div> */}
+      {/* <div className="nextPage" onClick={() => nextQuiz()}>
+        계속하기
+      </div> */}
     </StyledOne>
   );
 };

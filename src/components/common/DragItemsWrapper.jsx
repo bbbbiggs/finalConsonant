@@ -14,6 +14,7 @@ const StyledDragItemsWrapper = styled.div`
     width: 60px;
     border: 2px solid rgb(229, 229, 229);
     border-radius: 10px;
+    aspect-ratio: 60 / 60;
     cursor: grab;
     box-shadow: var(
       --m3-elevation-light-3-box-shadow,
