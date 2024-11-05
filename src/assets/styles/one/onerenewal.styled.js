@@ -58,6 +58,7 @@ export const StyledOneRenewal = styled.div`
 
     .correctText {
       color: rgba(140, 213, 83, 1);
+      height: 55px;
 
       font-family: Roboto;
       font-size: 41px;
@@ -140,6 +141,44 @@ export const StyledOneRenewal = styled.div`
     }
     .consonantButton:active {
       cursor: grabbing;
+    }
+
+    .nextGame {
+      background-color: #f66934;
+      width: 150px;
+      height: 150px;
+      border: 5px solid #ffffff;
+      box-shadow: 5px 5px 4px 0px #00000040;
+      border-radius: 50%;
+
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      cursor: pointer;
+
+      opacity: 0;
+      pointer-events: none;
+      /* transition: opacity 1s ease, transform 1s ease; */
+
+      svg {
+        color: white;
+        width: 72px;
+        height: 60px;
+      }
+      p {
+        font-family: Roboto;
+        font-size: 19px;
+        font-weight: 700;
+        color: white;
+      }
+
+      &.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+    .nextPage {
+      background-color: rgb(223 168 0);
     }
   }
 `;
