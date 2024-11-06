@@ -8,6 +8,7 @@ import {
   faCaretRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import BackButton from "./common/BackButton";
 
 const OneRenewal = () => {
   const consonantArr = ["bieup", "rieul", "nieun"];
@@ -55,6 +56,7 @@ const OneRenewal = () => {
 
   return (
     <StyledOneRenewal>
+      <BackButton />
       <div className="topTextWrapper">
         <p className="topText">기초국어 ㅣ 튼튼2</p>
       </div>

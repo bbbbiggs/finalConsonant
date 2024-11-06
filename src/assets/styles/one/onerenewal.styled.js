@@ -121,6 +121,7 @@ export const StyledOneRenewal = styled.div`
     width: 100%;
     height: 235px;
     background-color: rgba(254, 209, 73, 1);
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -150,6 +151,9 @@ export const StyledOneRenewal = styled.div`
       border: 5px solid #ffffff;
       box-shadow: 5px 5px 4px 0px #00000040;
       border-radius: 50%;
+
+      position: absolute;
+      right: 100px;
 
       display: grid;
       align-content: center;
