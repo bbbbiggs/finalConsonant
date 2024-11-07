@@ -1,9 +1,7 @@
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
 
-const StyledBackButton = styled.div`
+const StyledCircleButton = styled.div`
   background-color: #7a7dff;
   width: 150px;
   height: 150px;
@@ -32,13 +30,12 @@ const StyledBackButton = styled.div`
   }
 `;
 
-const BackButton = () => {
+const CircleButton = (data) => {
   return (
-    <StyledBackButton>
-      <FontAwesomeIcon icon={faArrowLeft} />
-      <p>뒤로가기</p>
-    </StyledBackButton>
+    <StyledCircleButton onClick={data.onClick}>
+      {data.children}
+    </StyledCircleButton>
   );
 };
 
-export default BackButton;
+export default CircleButton;

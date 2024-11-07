@@ -6,6 +6,7 @@ export const StyledOneRenewal = styled.div`
   background-color: #fe9f5f;
   padding-top: 44px;
   margin: auto;
+  position: relative;
 
   .topTextWrapper {
     background-color: #f57a79;
@@ -132,12 +133,35 @@ export const StyledOneRenewal = styled.div`
       background-color: rgba(255, 247, 237, 1);
       box-shadow: 5px 5px 4px 0px rgba(0, 0, 0, 0.25);
       border-radius: 21px;
-      img {
-        width: 100%;
-        opacity: 1;
-      }
       &:hover {
         cursor: url(${process.env.PUBLIC_URL}/assets/images/cursor.png), pointer;
+      }
+    }
+    .hintOn {
+      animation: hintOn 1.5s ease-in-out forwards;
+    }
+    @keyframes hintOn {
+      0% {
+        background-color: transparent; /* 시작: 투명 */
+      }
+      40% {
+        background-color: rgba(
+          255,
+          255,
+          0,
+          0.8
+        ); /* 노란색으로 나타남, 약간 투명 */
+      }
+      70% {
+        background-color: rgba(255, 255, 0, 1); /* 노란색 유지 */
+      }
+      100% {
+        background-color: rgba(
+          255,
+          247,
+          237,
+          1
+        ); /* 원래 색상으로 서서히 돌아감 */
       }
     }
     .consonantButton:active {

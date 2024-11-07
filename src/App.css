@@ -18,7 +18,7 @@
 }
 
 .hintBorderAnimation {
-  background-color: gold;
+  background-color: yellowgreen;
   animation: hintBorderAnimation 1s infinite;
 }
 @keyframes hintBorderAnimation {
@@ -66,4 +66,8 @@
   50% {
     background-color: red;
   }
+}
+
+.dragDisabled {
+  pointer-events: none;
 }

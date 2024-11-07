@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyledOneRenewal } from "../assets/styles/one/onerenewal.styled";
-import Syllable from "./common/Syllable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHandPointer,
   faForward,
   faCaretRight,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import BackButton from "./common/BackButton";
+import CircleButton from "./common/CircleButton";
 
 const OneRenewal = () => {
   const consonantArr = ["bieup", "rieul", "nieun"];
@@ -16,6 +15,13 @@ const OneRenewal = () => {
 
   const [answerStatus, setAnswerStatus] = useState(false);
   const [quizCount, setQuizCount] = useState(0);
+  // 틀렸을시 화면흔들기
+  const [shake, setShake] = useState(false);
+
+  const [tryCount, setTryCount] = useState(0);
+
+  const nav = useNavigate();
+  const [tryTwo, setTryTwo] = useState([false, false, false]);
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -27,15 +33,44 @@ const OneRenewal = () => {
       answerArr[quizCount] === data_value
     ) {
       console.log("정답");
+
+      setTryCount(0); // 시도횟수0으로 변경
+
       setAnswerStatus(true);
     } else {
-      console.log(consonantValue, data_value);
-      console.log("들어오긴함");
+      // console.log(consonantValue, data_value);
 
+      setTryCount((tryCount) => tryCount + 1);
       setShake(true);
       setTimeout(() => setShake(false), 500);
     }
   };
+
+  useEffect(() => {
+    console.log("시도횟수: ", tryCount);
+
+    if (tryCount >= 2) {
+      if (tryTwo[quizCount] === false) {
+        setTryTwo((prevTryTwo) => {
+          const newTryTwo = [...prevTryTwo];
+          newTryTwo[quizCount] = true;
+          return newTryTwo;
+        });
+        setTimeout(() => {
+          setTryTwo((prevTryTwo) => {
+            const newTryTwo = [...prevTryTwo];
+            newTryTwo[quizCount] = false;
+            return newTryTwo;
+          });
+        }, 1500);
+
+        // setTryTwo(true);
+        // setTimeout(() => {
+        //   setTryTwo(false);
+        // }, 1500);
+      }
+    }
+  }, [tryCount]);
 
   const handleDragStart = (e, value) => {
     e.dataTransfer.setData("text/plain", value); // 드래그 데이터를 설정
@@ -50,13 +85,12 @@ const OneRenewal = () => {
     setAnswerStatus(false);
   };
 
-  const nav = useNavigate();
-  // 틀렸을시 화면흔들기
-  const [shake, setShake] = useState(false);
-
   return (
     <StyledOneRenewal>
-      <BackButton />
+      <CircleButton onClick={() => nav(-1)}>
+        <FontAwesomeIcon icon={faArrowLeft} />
+        <p>뒤로가기</p>
+      </CircleButton>
       <div className="topTextWrapper">
         <p className="topText">기초국어 ㅣ 튼튼2</p>
       </div>
@@ -119,30 +153,17 @@ const OneRenewal = () => {
           </div>
         </div> */}
       </div>
-      <footer>
-        <div
-          className="consonantButton"
-          onDragStart={(e) => handleDragStart(e, consonantArr[0])}
-        >
+      <footer className={`${answerStatus ? "dragDisabled" : ""}`}>
+        {consonantArr.map((element, index) => (
           <img
-            src={`${process.env.PUBLIC_URL}/assets/images/c_${consonantArr[0]}.png`}
+            key={element}
+            src={`${process.env.PUBLIC_URL}/assets/images/c_${consonantArr[index]}.png`}
+            className={`consonantButton ${tryTwo[index] ? "hintOn" : ""}`}
+            onDragStart={(e) => handleDragStart(e, consonantArr[index])}
             alt=""
           />
-        </div>
-        <div className="consonantButton">
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/c_${consonantArr[1]}.png`}
-            alt=""
-            onDragStart={(e) => handleDragStart(e, consonantArr[1])}
-          />
-        </div>
-        <div className="consonantButton">
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/c_${consonantArr[2]}.png`}
-            alt=""
-            onDragStart={(e) => handleDragStart(e, consonantArr[2])}
-          />
-        </div>
+        ))}
+
         {answerArr.length === quizCount + 1 ? (
           <div
             className={`nextGame nextPage ${answerStatus && "show"}`}
