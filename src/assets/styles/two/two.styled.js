@@ -87,10 +87,24 @@ export const StyledTwo = styled.div`
     width: 253px;
     .boardTitle {
       position: absolute;
-      top: 10%;
+      top: 33px;
       left: 46%;
       transform: translateX(-50%);
       font-size: 25px;
+    }
+    .wordListWrapper {
+      /* width: 140px; */
+      /* background-color: yellow; */
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+
+      .list_watermelon,
+      .list_persimmon {
+        display: none;
+      }
     }
   }
 
@@ -101,7 +115,23 @@ export const StyledTwo = styled.div`
     justify-content: center;
     gap: 25px;
     top: 25px;
-    .fruitStore {
+
+    .stageImgWrapper {
+      position: relative;
+      svg {
+        font-size: 50px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: black;
+        z-index: 1;
+        display: none;
+      }
+    }
+    .fruitStore,
+    .hospital,
+    .bookStore {
       width: 130px;
     }
   }

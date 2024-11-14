@@ -86,7 +86,8 @@ const OneRenewal = () => {
 
   return (
     <StyledOneRenewal>
-      <DndContext>
+      <DndContext onDragOver={(e) => e.preventDefault()}>
+        {/* onDragOver={(e) => e.preventDefault()} */}
         <BackButton />
         <TitleAndSubTitle />
         <p className="quizInstruction">

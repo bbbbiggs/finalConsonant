@@ -4,12 +4,12 @@ export const StyledOneRenewal = styled.div`
   max-width: 1440px;
   width: 100%;
   background-color: #fe9f5f;
-  padding-top: 44px;
+  /* padding-top: 44px; */
   margin: auto;
   position: relative;
 
   .quizInstruction {
-    margin-top: 32px;
+    margin-top: 25px;
     color: #ffffff;
 
     font-family: Roboto;
