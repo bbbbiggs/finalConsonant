@@ -8,25 +8,6 @@ export const StyledOneRenewal = styled.div`
   margin: auto;
   position: relative;
 
-  .topTextWrapper {
-    background-color: #f57a79;
-    box-sizing: border-box;
-    width: 300px;
-    /* height: 60px; */
-    line-height: 60px;
-    border: 3px solid #fffbfb;
-    border-top-right-radius: 106px;
-    border-bottom-right-radius: 106px;
-    box-shadow: 0px 4px 4px 0px #00000040;
-
-    .topText {
-      font-family: Roboto;
-      font-size: 25px;
-      font-weight: 700;
-      text-align: center;
-      color: #fffbfb;
-    }
-  }
   .quizInstruction {
     margin-top: 32px;
     color: #ffffff;
@@ -186,6 +167,7 @@ export const StyledOneRenewal = styled.div`
 
       opacity: 0;
       pointer-events: none;
+      z-index: 3;
       /* transition: opacity 1s ease, transform 1s ease; */
 
       svg {

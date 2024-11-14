@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { StyledOneRenewal } from "../assets/styles/one/onerenewal.styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faForward,
-  faCaretRight,
-  faArrowLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { faForward, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import CircleButton from "./common/CircleButton";
+import { DndContext } from "@dnd-kit/core";
+import DraggableImage from "./common/DraggableImage";
+import BackButton from "./common/BackButton";
+import TitleAndSubTitle from "./common/TitleAndSubTitle";
 
 const OneRenewal = () => {
   const consonantArr = ["bieup", "rieul", "nieun"];
@@ -87,50 +86,46 @@ const OneRenewal = () => {
 
   return (
     <StyledOneRenewal>
-      <CircleButton onClick={() => nav(-1)}>
-        <FontAwesomeIcon icon={faArrowLeft} />
-        <p>뒤로가기</p>
-      </CircleButton>
-      <div className="topTextWrapper">
-        <p className="topText">기초국어 ㅣ 튼튼2</p>
-      </div>
-      <p className="quizInstruction">
-        빈칸에 알맞은 받침을 넣어 낱말을 완성해볼까요?
-      </p>
-      <div className="quizWrapper">
-        <p className="correctText">{answerStatus && "정답입니다!"}</p>
-        <div
-          className={`quizimgsWrapper ${
-            shake && answerStatus === false ? "shake" : ""
-          }`}
-        >
-          {/* 퀴즈이미지 */}
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/${answerArr[quizCount]}Img.png`}
-            alt=""
-            draggable={false}
-          />
-
-          {/* 음절 아,침 */}
-          <div className="syllable">
+      <DndContext>
+        <BackButton />
+        <TitleAndSubTitle />
+        <p className="quizInstruction">
+          빈칸에 알맞은 받침을 넣어 낱말을 완성해볼까요?
+        </p>
+        <div className="quizWrapper">
+          <p className="correctText">{answerStatus && "정답입니다!"}</p>
+          <div
+            className={`quizimgsWrapper ${
+              shake && answerStatus === false ? "shake" : ""
+            }`}
+          >
+            {/* 퀴즈이미지 */}
             <img
-              // data-value={data.dataValue}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={handleDrop}
-              src={`${process.env.PUBLIC_URL}/assets/images/${
-                answerStatus
-                  ? answerArr[quizCount]
-                  : answerArr[quizCount] + "_before"
-              }.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/one/${answerArr[quizCount]}Img.png`}
               alt=""
               draggable={false}
-              data-value={answerArr[quizCount]}
-              // ref={syllableRef}
             />
-          </div>
-        </div>
 
-        {/* <div className="quizimgsWrapper">
+            {/* 음절 아,침 */}
+            <div className="syllable">
+              <img
+                // data-value={data.dataValue}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleDrop}
+                src={`${process.env.PUBLIC_URL}/assets/images/one/${
+                  answerStatus
+                    ? answerArr[quizCount]
+                    : answerArr[quizCount] + "_before"
+                }.png`}
+                alt=""
+                draggable={false}
+                data-value={answerArr[quizCount]}
+                // ref={syllableRef}
+              />
+            </div>
+          </div>
+
+          {/* <div className="quizimgsWrapper">
           <img
             src={`${process.env.PUBLIC_URL}/assets/images/footImg.png`}
             alt=""
@@ -152,36 +147,44 @@ const OneRenewal = () => {
             />
           </div>
         </div> */}
-      </div>
-      <footer className={`${answerStatus ? "dragDisabled" : ""}`}>
-        {consonantArr.map((element, index) => (
-          <img
-            key={element}
-            src={`${process.env.PUBLIC_URL}/assets/images/c_${consonantArr[index]}.png`}
-            className={`consonantButton ${tryTwo[index] ? "hintOn" : ""}`}
-            onDragStart={(e) => handleDragStart(e, consonantArr[index])}
-            alt=""
-          />
-        ))}
+        </div>
+        <footer className={`${answerStatus ? "dragDisabled" : ""}`}>
+          {consonantArr.map((element, index) => (
+            <img
+              key={element}
+              src={`${process.env.PUBLIC_URL}/assets/images/one/c_${consonantArr[index]}.png`}
+              className={`consonantButton ${tryTwo[index] ? "hintOn" : ""}`}
+              onDragStart={(e) => handleDragStart(e, consonantArr[index])}
+              alt=""
+            />
+          ))}
 
-        {answerArr.length === quizCount + 1 ? (
-          <div
-            className={`nextGame nextPage ${answerStatus && "show"}`}
-            onClick={() => nav("/two")}
-          >
-            <FontAwesomeIcon icon={faCaretRight} />
-            <p>다음페이지</p>
-          </div>
-        ) : (
-          <div
-            className={`nextGame ${answerStatus && "show"}`}
-            onClick={() => nextGame()}
-          >
-            <FontAwesomeIcon icon={faForward} />
-            <p>다음으로</p>
-          </div>
-        )}
-      </footer>
+          <DraggableImage
+            src={`${process.env.PUBLIC_URL}/assets/images/one/c_${consonantArr[0]}.png`}
+            className={`consonantButton`}
+            onDragStart={(e) => handleDragStart(e, consonantArr[0])}
+            dragValue={"abc"}
+          />
+
+          {answerArr.length === quizCount + 1 ? (
+            <div
+              className={`nextGame nextPage ${answerStatus && "show"}`}
+              onClick={() => nav("/two")}
+            >
+              <FontAwesomeIcon icon={faCaretRight} />
+              <p>다음페이지</p>
+            </div>
+          ) : (
+            <div
+              className={`nextGame ${answerStatus && "show"}`}
+              onClick={() => nextGame()}
+            >
+              <FontAwesomeIcon icon={faForward} />
+              <p>다음으로</p>
+            </div>
+          )}
+        </footer>
+      </DndContext>
     </StyledOneRenewal>
   );
 };

@@ -8,9 +8,10 @@ const StyledCircleButton = styled.div`
   border: 5px solid #ffffff;
   box-shadow: 5px 5px 4px 0px #00000040;
   border-radius: 50%;
+  box-sizing: border-box;
 
   position: absolute;
-  right: 100px;
+  right: 41px;
 
   display: grid;
   align-content: center;

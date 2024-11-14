@@ -45,7 +45,7 @@ const Syllable = (data) => {
     >
       <img
         data-value={data.dataValue}
-        src={`${process.env.PUBLIC_URL}/assets/images/${
+        src={`${process.env.PUBLIC_URL}/assets/images/one/${
           data.status ? data.dataValue : data.dataValue + "_before"
         }.png`}
         alt=""
