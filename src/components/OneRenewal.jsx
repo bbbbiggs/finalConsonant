@@ -3,10 +3,38 @@ import { StyledOneRenewal } from "../assets/styles/one/onerenewal.styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faForward, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, useDroppable } from "@dnd-kit/core";
 import DraggableImage from "./common/DraggableImage";
 import BackButton from "./common/BackButton";
 import TitleAndSubTitle from "./common/TitleAndSubTitle";
+
+const DroppableArea = (data) => {
+  const consonantArr = ["bieup", "rieul", "nieun"];
+  const answerArr = ["mouse", "foot", "hand"];
+  const { setNodeRef } = useDroppable({
+    id: "dropAreaId",
+  });
+  return (
+    /* 음절 아,침 */
+    <div className="syllable" ref={setNodeRef}>
+      <img
+        ref={setNodeRef}
+        // data-value={data.dataValue}
+        // onDragOver={(e) => e.preventDefault()}
+        // onDrop={handleDrop}
+        src={`${process.env.PUBLIC_URL}/assets/images/one/${
+          data.status
+            ? answerArr[data.count]
+            : answerArr[data.count] + "_before"
+        }.png`}
+        alt=""
+        draggable={false}
+        data-value={answerArr[data.count]}
+        // ref={syllableRef}
+      />
+    </div>
+  );
+};
 
 const OneRenewal = () => {
   const consonantArr = ["bieup", "rieul", "nieun"];
@@ -44,6 +72,11 @@ const OneRenewal = () => {
       setTimeout(() => setShake(false), 500);
     }
   };
+  const handleDragStart = (e, value) => {
+    e.dataTransfer.setData("text/plain", value); // 드래그 데이터를 설정
+
+    // console.log("value: ", value);
+  };
 
   useEffect(() => {
     console.log("시도횟수: ", tryCount);
@@ -71,12 +104,6 @@ const OneRenewal = () => {
     }
   }, [tryCount]);
 
-  const handleDragStart = (e, value) => {
-    e.dataTransfer.setData("text/plain", value); // 드래그 데이터를 설정
-
-    // console.log("value: ", value);
-  };
-
   const nextGame = () => {
     console.log("다음게임실행");
     setQuizCount((quizCount) => quizCount + 1);
@@ -84,9 +111,45 @@ const OneRenewal = () => {
     setAnswerStatus(false);
   };
 
+  const handleDragEnd = (event) => {
+    setIsOver(false); // 드래그가 끝났을 때 상태 초기화
+
+    const { active, over } = event;
+    // console.log("active", active);
+    // console.log("over: ", over);
+    if (over) {
+      if (active.id === consonantArr[quizCount] && over.id === "dropAreaId") {
+        // console.log("정답");
+
+        setTryCount(0); // 시도횟수0으로 변경
+
+        setAnswerStatus(true);
+      } else {
+        setTryCount((tryCount) => tryCount + 1);
+        setShake(true);
+        setTimeout(() => setShake(false), 500);
+      }
+    }
+  };
+
+  const [isOver, setIsOver] = useState(false);
+  const handleDragOver = (event) => {
+    const { over } = event;
+
+    if (over && over.id === "dropAreaId" && !isOver) {
+      console.log("드롭 영역에 드래그 항목이 진입했습니다.");
+      // document.querySelector(".syllable img").style.border = "1px solid black";
+      setIsOver(true);
+    } else if (!over && isOver) {
+      console.log("드롭 영역에서 드래그 항목이 나갔습니다.");
+      // document.querySelector(".syllable img").style.border = "";
+      setIsOver(false);
+    }
+  };
+
   return (
     <StyledOneRenewal>
-      <DndContext onDragOver={(e) => e.preventDefault()}>
+      <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
         {/* onDragOver={(e) => e.preventDefault()} */}
         <BackButton />
         <TitleAndSubTitle />
@@ -106,24 +169,7 @@ const OneRenewal = () => {
               alt=""
               draggable={false}
             />
-
-            {/* 음절 아,침 */}
-            <div className="syllable">
-              <img
-                // data-value={data.dataValue}
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={handleDrop}
-                src={`${process.env.PUBLIC_URL}/assets/images/one/${
-                  answerStatus
-                    ? answerArr[quizCount]
-                    : answerArr[quizCount] + "_before"
-                }.png`}
-                alt=""
-                draggable={false}
-                data-value={answerArr[quizCount]}
-                // ref={syllableRef}
-              />
-            </div>
+            <DroppableArea status={answerStatus} count={quizCount} />
           </div>
 
           {/* <div className="quizimgsWrapper">
@@ -151,21 +197,20 @@ const OneRenewal = () => {
         </div>
         <footer className={`${answerStatus ? "dragDisabled" : ""}`}>
           {consonantArr.map((element, index) => (
-            <img
+            // <img
+            //   key={element}
+            //   src={`${process.env.PUBLIC_URL}/assets/images/one/c_${consonantArr[index]}.png`}
+            //   className={`consonantButton ${tryTwo[index] ? "hintOn" : ""}`}
+            //   onDragStart={(e) => handleDragStart(e, consonantArr[index])}
+            //   alt=""
+            // />
+            <DraggableImage
               key={element}
               src={`${process.env.PUBLIC_URL}/assets/images/one/c_${consonantArr[index]}.png`}
               className={`consonantButton ${tryTwo[index] ? "hintOn" : ""}`}
-              onDragStart={(e) => handleDragStart(e, consonantArr[index])}
-              alt=""
+              buttonValue={consonantArr[index]}
             />
           ))}
-
-          <DraggableImage
-            src={`${process.env.PUBLIC_URL}/assets/images/one/c_${consonantArr[0]}.png`}
-            className={`consonantButton`}
-            onDragStart={(e) => handleDragStart(e, consonantArr[0])}
-            dragValue={"abc"}
-          />
 
           {answerArr.length === quizCount + 1 ? (
             <div

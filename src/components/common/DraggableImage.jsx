@@ -3,7 +3,7 @@ import { useDraggable } from "@dnd-kit/core";
 
 const DraggableImage = (data) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: data.dragValue,
+    id: data.buttonValue,
   });
   const style = {
     aspectRatio: "1", // 60/60으로 설정하려면 '1'로 설정
