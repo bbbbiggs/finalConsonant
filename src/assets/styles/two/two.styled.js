@@ -15,7 +15,7 @@ export const StyledTwo = styled.div`
     font-size: 30px;
     font-weight: 500;
     position: relative;
-    -webkit-text-stroke: 0.5px #ffffff;
+    /* -webkit-text-stroke: 0.5px #ffffff; */
 
     margin: 53px 0;
     margin-left: 69px;

@@ -9,7 +9,6 @@ import BackButton from "./common/BackButton";
 import TitleAndSubTitle from "./common/TitleAndSubTitle";
 
 const DroppableArea = (data) => {
-  const consonantArr = ["bieup", "rieul", "nieun"];
   const answerArr = ["mouse", "foot", "hand"];
   const { setNodeRef } = useDroppable({
     id: "dropAreaId",
@@ -27,6 +26,7 @@ const DroppableArea = (data) => {
             ? answerArr[data.count]
             : answerArr[data.count] + "_before"
         }.png`}
+        className={data.className}
         alt=""
         draggable={false}
         data-value={answerArr[data.count]}
@@ -169,7 +169,11 @@ const OneRenewal = () => {
               alt=""
               draggable={false}
             />
-            <DroppableArea status={answerStatus} count={quizCount} />
+            <DroppableArea
+              status={answerStatus}
+              count={quizCount}
+              className={`${isOver ? "borderAnimation" : ""}`}
+            />
           </div>
 
           {/* <div className="quizimgsWrapper">
