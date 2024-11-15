@@ -26,77 +26,37 @@ const DroppableArea = (data) => {
       />
       <p className="boardTitle">'{data.consonant}'받침</p>
       <div className="wordListWrapper">
-        <img
-          src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/watermelon.png`}
-          alt=""
-          className="list_watermelon"
-          draggable={false}
-        />
+        {data.consonantEnglish === "giyeok" && (
+          <>
+            <div className="list_watermelon">
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/watermelonImg.png`}
+                alt=""
+                className="watermelon_img"
+              />
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/watermelon.png`}
+                alt=""
+                // className="list_watermelon"
+                draggable={false}
+              />
+            </div>
+          </>
+        )}
+        {data.consonantEnglish === "mieum" && (
+          <>
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/persimmon.png`}
+              alt=""
+              className="list_persimmon"
+              draggable={false}
+            />
+          </>
+        )}
       </div>
     </div>
   );
 };
-const DroppableArea2 = (data) => {
-  const { setNodeRef } = useDroppable({
-    id: data.consonantEnglish,
-  });
-  return (
-    <div className="boardWrapper" ref={setNodeRef}>
-      <img
-        // onDragOver={(e) => e.preventDefault()}
-        // dragover 이벤트 발생 시 기본 동작을 막아주는 역할을 함.
-        // 일반적으로 HTML 요소에서 dragover이벤트는 기본적으로 드래그된 요소가 해당 위치에 드롭되지 못하도록 함. 따라서 preventDefault를 호출하면 드래그된 요소를 해당 위치에 드롭할 수 있는 상태가 됨.
-        //e.preventDefault()는 브라우저가 기본적으로 드롭을 허용하지 않는 것을 막아, 이후 onDrop 이벤트가 발생할 수 있도록 도와준다.
-        // onDrop={handleDrop}
-        src={`${process.env.PUBLIC_URL}/assets/images/two/board.png`}
-        alt=""
-        draggable={false}
-        data-value={data.consonantEnglish}
-      />
-      <p className="boardTitle">'{data.consonant}'받침</p>
-      <div className="wordListWrapper">
-        <img
-          src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/persimmon.png`}
-          alt=""
-          draggable={false}
-          className="list_persimmon"
-        />
-      </div>
-    </div>
-  );
-};
-
-//     {/* <div className="boardWrapper">
-//   <img
-//     onDragOver={(e) => e.preventDefault()}
-//     onDrop={handleDrop}
-//     src={`${process.env.PUBLIC_URL}/assets/images/two/board.png`}
-//     alt=""
-//     draggable={false}
-//     data-value={"nieun"}
-//   />
-//   <p className="boardTitle">'ㄴ'받침</p>
-// </div> */}
-
-// {/* <div className="boardWrapper">
-//   <img
-//     onDragOver={(e) => e.preventDefault()}
-//     onDrop={handleDrop}
-//     src={`${process.env.PUBLIC_URL}/assets/images/two/board.png`}
-//     alt=""
-//     draggable={false}
-//     data-value={"mieum"}
-//   />
-//   <p className="boardTitle">'ㅁ'받침</p>
-//   <div className="wordListWrapper">
-//     <img
-//       src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/persimmon.png`}
-//       alt=""
-//       draggable={false}
-//       className="list_persimmon"
-//     />
-//   </div>
-// </div> */}
 
 const Two = () => {
   const [stageCount, setStageCount] = useState(0);
@@ -115,6 +75,7 @@ const Two = () => {
       setStageCount((stageCount) => stageCount + 1);
       document.querySelector(".watermelon").style.display = "none";
       document.querySelector(".list_watermelon").style.display = "block";
+      document.querySelector(".list_water").style.display = "block";
     } else if (drag_word === "persimmon" && data_value === "mieum") {
       setStageCount((stageCount) => stageCount + 1);
       document.querySelector(".persimmon").style.display = "none";
@@ -266,7 +227,7 @@ const Two = () => {
           <div className="dragArea">
             <DroppableArea consonant={"ㄱ"} consonantEnglish={"giyeok"} />
             <DroppableArea consonant={"ㄴ"} consonantEnglish={"nieun"} />
-            <DroppableArea2 consonant={"ㅁ"} consonantEnglish={"mieum"} />
+            <DroppableArea consonant={"ㅁ"} consonantEnglish={"mieum"} />
           </div>
         </div>
 

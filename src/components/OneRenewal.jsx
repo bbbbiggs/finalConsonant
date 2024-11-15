@@ -148,7 +148,6 @@ const OneRenewal = () => {
   return (
     <StyledOneRenewal>
       <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
-        {/* onDragOver={(e) => e.preventDefault()} */}
         <BackButton />
         <TitleAndSubTitle />
         <p className="quizInstruction">
@@ -222,13 +221,15 @@ const OneRenewal = () => {
           ))}
 
           {answerArr.length === quizCount + 1 ? (
-            <div
-              className={`nextGame nextPage ${answerStatus && "show"}`}
-              onClick={() => nav("/two")}
-            >
-              <FontAwesomeIcon icon={faCaretRight} />
-              <p>다음페이지</p>
-            </div>
+            <>
+              <div
+                className={`nextGame nextPage ${answerStatus && "show"}`}
+                onClick={() => nav("/two")}
+              >
+                <FontAwesomeIcon icon={faCaretRight} />
+                <p>다음페이지</p>
+              </div>
+            </>
           ) : (
             <div
               className={`nextGame ${answerStatus && "show"}`}
