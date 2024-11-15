@@ -3,7 +3,7 @@ import { useDraggable } from "@dnd-kit/core";
 
 const DraggableImage = (data) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: data.buttonValue,
+    id: data.dragImgId,
   });
   // console.log("position: ", position);
   const style = {

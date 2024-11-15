@@ -216,7 +216,7 @@ const OneRenewal = () => {
               key={element}
               src={`${process.env.PUBLIC_URL}/assets/images/one/c_${consonantArr[index]}.png`}
               className={`consonantButton ${tryTwo[index] ? "hintOn" : ""}`}
-              buttonValue={consonantArr[index]}
+              dragImgId={consonantArr[index]}
               status={isOver}
             />
           ))}
