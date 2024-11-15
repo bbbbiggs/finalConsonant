@@ -37,6 +37,14 @@ const Two = () => {
     }
   }, [stageCount]);
 
+  const stageSelect = (store) => {
+    setNowStage(store);
+    console.log("눌림!!", store);
+  };
+
+  const stageArr = ["fruitStore", "hospital", "bookStore"];
+  const [nowStage, setNowStage] = useState("fruitStore"); // 처음엔 과일가게로 설정
+
   return (
     <StyledTwo>
       <div className="footerBackground"></div>
@@ -66,26 +74,54 @@ const Two = () => {
       <p className="quizInstruction">받침을 살펴보며 낱말을 드래그 해봅시다.</p>
       <div className="quizWrapper">
         <div className="questionArea">
-          {/* <p>과일가게</p> */}
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/two/fruitStore.png`}
-            alt=""
-            draggable={false}
-          />
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/watermelon.png`}
-            alt=""
-            className="watermelon"
-            // draggable={false}
-            onDragStart={(e) => handleDragStart(e, "watermelon")}
-          />
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/persimmon.png`}
-            alt=""
-            className="persimmon"
-            // draggable={false}
-            onDragStart={(e) => handleDragStart(e, "persimmon")}
-          />
+          {nowStage === "fruitStore" && (
+            <>
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/images/two/quizImg/fruitStore.png`}
+                alt=""
+                draggable={false}
+              />
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/watermelon.png`}
+                alt=""
+                className="watermelon"
+                // draggable={false}
+                onDragStart={(e) => handleDragStart(e, "watermelon")}
+              />
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/persimmon.png`}
+                alt=""
+                className="persimmon"
+                // draggable={false}
+                onDragStart={(e) => handleDragStart(e, "persimmon")}
+              />
+            </>
+          )}
+          {nowStage === "hospital" && (
+            <>
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/images/two/quizImg/hospital.png`}
+                alt=""
+                draggable={false}
+              />
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/nurse.png`}
+                alt=""
+                className="nurse"
+                // draggable={false}
+                onDragStart={(e) => handleDragStart(e, "nurse")}
+              />
+            </>
+          )}
+          {nowStage === "bookStore" && (
+            <>
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/images/two/quizImg/bookStore.png`}
+                alt=""
+                draggable={false}
+              />
+            </>
+          )}
         </div>
         <div className="dragArea">
           <div className="boardWrapper">
@@ -155,27 +191,21 @@ const Two = () => {
       </div>
 
       <div className="stageWrapper">
-        <div className="stageImgWrapper">
-          <FontAwesomeIcon icon={faSquareCheck} />
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/two/store/fruitStore.jpeg`}
-            alt=""
-            className="fruitStore"
-            draggable={false}
-          />
-        </div>
-        <img
-          src={`${process.env.PUBLIC_URL}/assets/images/two/store/hospital.webp`}
-          alt=""
-          className="hospital"
-          draggable={false}
-        />
-        <img
-          src={`${process.env.PUBLIC_URL}/assets/images/two/store/books.webp`}
-          alt=""
-          className="bookStore"
-          draggable={false}
-        />
+        {stageArr.map((element, index) => (
+          <div
+            key={element}
+            className="stageImgWrapper"
+            onClick={() => stageSelect(element)}
+          >
+            <FontAwesomeIcon icon={faSquareCheck} />
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/images/two/store/${element}.jpeg`}
+              alt=""
+              className={element}
+              draggable={false}
+            />
+          </div>
+        ))}
       </div>
     </StyledTwo>
   );

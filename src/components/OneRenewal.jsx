@@ -3,7 +3,7 @@ import { StyledOneRenewal } from "../assets/styles/one/onerenewal.styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faForward, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { DndContext, useDroppable } from "@dnd-kit/core";
+import { DndContext, DragOverlay, useDroppable } from "@dnd-kit/core";
 import DraggableImage from "./common/DraggableImage";
 import BackButton from "./common/BackButton";
 import TitleAndSubTitle from "./common/TitleAndSubTitle";
@@ -137,12 +137,10 @@ const OneRenewal = () => {
     const { over } = event;
 
     if (over && over.id === "dropAreaId" && !isOver) {
-      console.log("드롭 영역에 드래그 항목이 진입했습니다.");
-      // document.querySelector(".syllable img").style.border = "1px solid black";
+      // console.log("드롭 영역에 드래그 항목이 진입했습니다.");
       setIsOver(true);
     } else if (!over && isOver) {
-      console.log("드롭 영역에서 드래그 항목이 나갔습니다.");
-      // document.querySelector(".syllable img").style.border = "";
+      // console.log("드롭 영역에서 드래그 항목이 나갔습니다.");
       setIsOver(false);
     }
   };
@@ -157,7 +155,10 @@ const OneRenewal = () => {
           빈칸에 알맞은 받침을 넣어 낱말을 완성해볼까요?
         </p>
         <div className="quizWrapper">
-          <p className="correctText">{answerStatus && "정답입니다!"}</p>
+          {/* <p className="correctText">{answerStatus && "정답입니다!"}</p> */}
+          <p className={answerStatus ? "correctText blink" : "correctText"}>
+            {answerStatus && "정답입니다!"}
+          </p>
           <div
             className={`quizimgsWrapper ${
               shake && answerStatus === false ? "shake" : ""
@@ -208,11 +209,15 @@ const OneRenewal = () => {
             //   onDragStart={(e) => handleDragStart(e, consonantArr[index])}
             //   alt=""
             // />
+
+            // <DragOverlay>
+            //   </DragOverlay>
             <DraggableImage
               key={element}
               src={`${process.env.PUBLIC_URL}/assets/images/one/c_${consonantArr[index]}.png`}
               className={`consonantButton ${tryTwo[index] ? "hintOn" : ""}`}
               buttonValue={consonantArr[index]}
+              status={isOver}
             />
           ))}
 

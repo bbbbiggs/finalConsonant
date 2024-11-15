@@ -71,3 +71,35 @@
 .dragDisabled {
   pointer-events: none;
 }
+
+.fade-feedback {
+  animation: fadeOut 2s ease forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.blink {
+  color: rgba(140, 213, 83, 1);
+  height: 55px;
+  font-family: Roboto;
+  font-size: 41px;
+  font-weight: 600;
+  animation: blink 1s ease-in-out infinite; /* 깜빡임 애니메이션 추가 */
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1; /* 시작과 끝에서는 보이도록 */
+  }
+  50% {
+    opacity: 0; /* 중간에 깜빡이도록 */
+  }
+}

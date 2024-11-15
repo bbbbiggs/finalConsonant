@@ -51,6 +51,12 @@ export const StyledTwo = styled.div`
         top: 220px;
         cursor: pointer;
       }
+      .nurse {
+        position: absolute;
+        bottom: 84px;
+        left: 145px;
+        cursor: pointer;
+      }
     }
     .dragArea {
       /* background-color: bisque; */
@@ -118,6 +124,7 @@ export const StyledTwo = styled.div`
 
     .stageImgWrapper {
       position: relative;
+      cursor: pointer;
       svg {
         font-size: 50px;
         position: absolute;

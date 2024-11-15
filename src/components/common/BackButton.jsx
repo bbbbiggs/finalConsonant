@@ -8,6 +8,7 @@ import styled from "styled-components";
 const StyledBackButton = styled.div`
   div {
     top: 50px;
+    z-index: 1;
   }
 `;
 
