@@ -57,6 +57,11 @@ export const StyledTwo = styled.div`
         left: 145px;
         cursor: pointer;
       }
+      .book {
+        position: absolute;
+        top: 179px;
+        left: 175px;
+      }
     }
     .dragArea {
       /* background-color: bisque; */
@@ -106,11 +111,6 @@ export const StyledTwo = styled.div`
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
-
-      .list_watermelon,
-      .list_persimmon {
-        display: none;
-      }
     }
   }
 
@@ -124,7 +124,6 @@ export const StyledTwo = styled.div`
 
     .stageImgWrapper {
       position: relative;
-      cursor: pointer;
       svg {
         font-size: 50px;
         position: absolute;
@@ -134,6 +133,14 @@ export const StyledTwo = styled.div`
         color: black;
         z-index: 1;
         display: none;
+      }
+      &.clear {
+        img {
+          opacity: 0.5;
+        }
+        svg {
+          display: block;
+        }
       }
     }
     .fruitStore,

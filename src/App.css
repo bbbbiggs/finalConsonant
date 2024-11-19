@@ -3,6 +3,10 @@
   user-select: none;
 }
 
+.hidden {
+  display: none;
+  position: relative;
+}
 .borderAnimation {
   border: 3px outset red;
   animation: borderAnimation 1s infinite;

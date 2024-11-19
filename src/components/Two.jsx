@@ -5,137 +5,144 @@ import TitleAndSubTitle from "./common/TitleAndSubTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareCheck } from "@fortawesome/free-regular-svg-icons";
 import DraggableImage from "./common/DraggableImage";
-import { DndContext, useDroppable } from "@dnd-kit/core";
-
-const DroppableArea = (data) => {
-  const { setNodeRef } = useDroppable({
-    id: data.consonantEnglish,
-  });
-  return (
-    <div className="boardWrapper" ref={setNodeRef}>
-      <img
-        // onDragOver={(e) => e.preventDefault()}
-        // dragover 이벤트 발생 시 기본 동작을 막아주는 역할을 함.
-        // 일반적으로 HTML 요소에서 dragover이벤트는 기본적으로 드래그된 요소가 해당 위치에 드롭되지 못하도록 함. 따라서 preventDefault를 호출하면 드래그된 요소를 해당 위치에 드롭할 수 있는 상태가 됨.
-        //e.preventDefault()는 브라우저가 기본적으로 드롭을 허용하지 않는 것을 막아, 이후 onDrop 이벤트가 발생할 수 있도록 도와준다.
-        // onDrop={handleDrop}
-        src={`${process.env.PUBLIC_URL}/assets/images/two/board.png`}
-        alt=""
-        draggable={false}
-        data-value={data.consonantEnglish}
-      />
-      <p className="boardTitle">'{data.consonant}'받침</p>
-      <div className="wordListWrapper">
-        {data.consonantEnglish === "giyeok" && (
-          <>
-            <div className="list_watermelon">
-              <img
-                src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/watermelonImg.png`}
-                alt=""
-                className="watermelon_img"
-              />
-              <img
-                src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/watermelon.png`}
-                alt=""
-                // className="list_watermelon"
-                draggable={false}
-              />
-            </div>
-          </>
-        )}
-        {data.consonantEnglish === "mieum" && (
-          <>
-            <img
-              src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/persimmon.png`}
-              alt=""
-              className="list_persimmon"
-              draggable={false}
-            />
-          </>
-        )}
-      </div>
-    </div>
-  );
-};
+import { DndContext } from "@dnd-kit/core";
+import DroppableArea from "./common/DroppableArea";
+import NextButton from "./common/NextButton";
+import { useNavigate } from "react-router-dom";
+import NextPage from "./common/NextPage";
 
 const Two = () => {
   const [stageCount, setStageCount] = useState(0);
-
-  const handleDragStart = (e, value) => {
-    e.dataTransfer.setData("text/plain", value); // 드래그 데이터를 설정
-  };
-
-  const handleDrop = (e) => {
-    const drag_word = e.dataTransfer.getData("text/plain"); // 드래그된 값 가져오기
-    const data_value = e.target.getAttribute("data-value");
-    console.log("드래그한이미지, 받침값: ", drag_word, "hi", data_value);
-
-    if (drag_word === "watermelon" && data_value === "giyeok") {
-      console.log("정답");
-      setStageCount((stageCount) => stageCount + 1);
-      document.querySelector(".watermelon").style.display = "none";
-      document.querySelector(".list_watermelon").style.display = "block";
-      document.querySelector(".list_water").style.display = "block";
-    } else if (drag_word === "persimmon" && data_value === "mieum") {
-      setStageCount((stageCount) => stageCount + 1);
-      document.querySelector(".persimmon").style.display = "none";
-      document.querySelector(".list_persimmon").style.display = "block";
-    } else if (drag_word === "nurse" && data_value === "nieun") {
-      alert("정답!");
-    }
-  };
-
-  useEffect(() => {
-    console.log(stageCount);
-    if (stageCount === 2) {
-      document.querySelector(".fruitStore").style.opacity = "0.5";
-      document.querySelector(".stageImgWrapper svg").style.display = "block";
-    }
-  }, [stageCount]);
-
-  const stageSelect = (store) => {
-    setNowStage(store);
-    console.log("눌림!!", store);
-  };
+  const fruitStoreArr = ["watermelon", "persimmon"];
+  const hospitalArr = ["nurse"];
+  const [oneStageClear, setOneStageClear] = useState(false);
+  // 2개 합칠예정
+  const [stageClear, setStageClear] = useState([false, false, false]);
 
   const stageArr = ["fruitStore", "hospital", "bookStore"];
   const [nowStage, setNowStage] = useState("fruitStore"); // 처음엔 과일가게로 설정
+  const [hiddenStatus, setHiddenStatus] = useState([
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [gameEnd, setGameEnd] = useState(false);
+
+  // const [blockStatus, setBlockStatus] = useState([false, false, false]);
+  const [watermelonStatus, setWatermelonStatus] = useState(false);
+  const [persimmonStatus, setPersimmonStatus] = useState(false);
+  const [nurseStatus, setNurseStatus] = useState(false);
+  const [bookStatus, setBookStatus] = useState(false);
+
+  useEffect(() => {
+    if (nowStage === "fruitStore" && stageCount === fruitStoreArr.length) {
+      setOneStageClear(true);
+    } else if (nowStage === "hospital" && stageCount === hospitalArr.length) {
+      setOneStageClear(true);
+    }
+  }, [stageCount]);
+
+  useEffect(() => {
+    // console.log("스테이지바뀜: ", oneStageClear, nowStage);
+    if (oneStageClear === true) {
+      stageArr.map((element, index) => {
+        if (element === nowStage) {
+          setStageClear((prev) => {
+            const newStatus = [...prev];
+            newStatus[index] = true;
+            return newStatus;
+          });
+        }
+      });
+    }
+
+    // if (oneStageClear === true) {
+    //   setStageClear((prev) => {
+    //     const newStatus = [...prev];
+    //     newStatus[0] = true;
+    //     return newStatus;
+    //   });
+    // }
+  }, [oneStageClear]);
 
   const handleDragEnd = (event) => {
-    // console.log(event);
     const { active, over } = event;
+    // active 드래그할 요소 / over 드래그할영역
     if (over) {
-      console.log(111, active.id, over.id);
-
       if (active.id === "watermelon" && over.id === "giyeok") {
-        console.log("정답!");
+        console.log("수박 정답!");
+        setWatermelonStatus(true);
+
         setStageCount((stageCount) => stageCount + 1);
-        document.querySelector(".watermelon").style.display = "none";
-        document.querySelector(".list_watermelon").style.display = "block";
+        setHiddenStatus((prevStatus) => {
+          const newStatus = [...prevStatus];
+          newStatus[0] = true;
+          return newStatus;
+        });
+
+        // setBlockStatus((prevStatus) => {
+        //   const newStatus = [...prevStatus];
+        //   newStatus[0] = "block";
+        //   return newStatus;
+        // });
       } else if (active.id === "persimmon" && over.id === "mieum") {
+        console.log("감 정답!");
         setStageCount((stageCount) => stageCount + 1);
-        document.querySelector(".persimmon").style.display = "none";
-        document.querySelector(".list_persimmon").style.display = "block";
+        setHiddenStatus((prevStatus) => {
+          const newStatus = [...prevStatus];
+          newStatus[1] = true;
+          return newStatus;
+        });
+
+        setPersimmonStatus(true);
+      } else if (active.id === "nurse" && over.id === "nieun") {
+        console.log("간호사 정답!");
+        setStageCount((stageCount) => stageCount + 1);
+        setHiddenStatus((prevStatus) => {
+          const newStatus = [...prevStatus];
+          newStatus[2] = true;
+          return newStatus;
+        });
+
+        setNurseStatus(true);
+      } else if (active.id === "book" && over.id === "giyeok") {
+        console.log("책 정답!");
+
+        setStageCount((stageCount) => stageCount + 1);
+        setHiddenStatus((prevStatus) => {
+          const newStatus = [...prevStatus];
+          newStatus[3] = true;
+          return newStatus;
+        });
+
+        setBookStatus(true);
+
+        setGameEnd(true); // 게임종료시 실행시키기
       }
     }
   };
 
-  const handleDragOver = (event) => {
-    const { over } = event;
-    // console.log("over: ", over);
+  const nextGame = () => {
+    setOneStageClear(false);
+    if (nowStage === "fruitStore") {
+      setNowStage("hospital");
+      setStageCount(0);
 
-    // if (over && over.id === "dropAreaId" && !isOver) {
-    //   console.log("드롭 영역에 드래그 항목이 진입했습니다.");
-    //   setIsOver(/true);
-    // } else if (!over && isOver) {
-    //   console.log("드롭 영역에서 드래그 항목이 나갔습니다.");
-    //   setIsOver(false);
-    // }
+      setWatermelonStatus(false);
+      setPersimmonStatus(false);
+    } else if (nowStage === "hospital") {
+      setNowStage("bookStore");
+
+      setNurseStatus(false);
+    }
   };
+
+  const nav = useNavigate();
 
   return (
     <StyledTwo>
-      <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
+      <DndContext onDragEnd={handleDragEnd}>
         <div className="footerBackground"></div>
         <div className="cloud">
           <img
@@ -158,8 +165,12 @@ const Two = () => {
           />
         </div>
         <BackButton />
-        <TitleAndSubTitle />
+        {/* 정답을 맞추면, clear 상태일때, */}
+        {oneStageClear && <NextButton onclick={() => nextGame()} />}
+        {/* 마지막 퀴즈를 맞추면 다음페이지 버튼 */}
+        {gameEnd && <NextPage onclick={() => nav("/")} />}
 
+        <TitleAndSubTitle />
         <p className="quizInstruction">
           받침을 살펴보며 낱말을 드래그 해봅시다.
         </p>
@@ -174,28 +185,14 @@ const Two = () => {
                 />
                 <DraggableImage
                   src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/watermelon.png`}
-                  className="watermelon"
+                  className={`watermelon ${hiddenStatus[0] ? "hidden" : ""}`}
                   dragImgId={"watermelon"}
                 />
                 <DraggableImage
                   src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/persimmon.png`}
-                  className="persimmon"
+                  className={`persimmon ${hiddenStatus[1] ? "hidden" : ""}`}
                   dragImgId={"persimmon"}
                 />
-                {/* <img
-                  src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/watermelon.png`}
-                  alt=""
-                  className="watermelon"
-                  // draggable={false}
-                  onDragStart={(e) => handleDragStart(e, "watermelon")}
-                />
-                <img
-                  src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/persimmon.png`}
-                  alt=""
-                  className="persimmon"
-                  // draggable={false}
-                  onDragStart={(e) => handleDragStart(e, "persimmon")}
-                /> */}
               </>
             )}
             {nowStage === "hospital" && (
@@ -205,12 +202,10 @@ const Two = () => {
                   alt=""
                   draggable={false}
                 />
-                <img
+                <DraggableImage
                   src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/nurse.png`}
-                  alt=""
-                  className="nurse"
-                  // draggable={false}
-                  onDragStart={(e) => handleDragStart(e, "nurse")}
+                  className={`nurse ${hiddenStatus[2] ? "hidden" : ""}`}
+                  dragImgId={"nurse"}
                 />
               </>
             )}
@@ -221,22 +216,39 @@ const Two = () => {
                   alt=""
                   draggable={false}
                 />
+                <DraggableImage
+                  src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/book.png`}
+                  className={`book ${hiddenStatus[3] ? "hidden" : ""}`}
+                  dragImgId={"book"}
+                />
               </>
             )}
           </div>
           <div className="dragArea">
-            <DroppableArea consonant={"ㄱ"} consonantEnglish={"giyeok"} />
-            <DroppableArea consonant={"ㄴ"} consonantEnglish={"nieun"} />
-            <DroppableArea consonant={"ㅁ"} consonantEnglish={"mieum"} />
+            <DroppableArea
+              consonant={"ㄱ"}
+              consonantEnglish={"giyeok"}
+              watermelonStatus={watermelonStatus}
+              bookStatus={bookStatus}
+            />
+            <DroppableArea
+              consonant={"ㄴ"}
+              consonantEnglish={"nieun"}
+              nurseStatus={nurseStatus}
+            />
+            <DroppableArea
+              consonant={"ㅁ"}
+              consonantEnglish={"mieum"}
+              persimmonStatus={persimmonStatus}
+            />
           </div>
         </div>
-
         <div className="stageWrapper">
           {stageArr.map((element, index) => (
             <div
               key={element}
-              className="stageImgWrapper"
-              onClick={() => stageSelect(element)}
+              // className="stageImgWrapper"
+              className={`stageImgWrapper ${stageClear[index] ? "clear" : ""}`}
             >
               <FontAwesomeIcon icon={faSquareCheck} />
               <img
