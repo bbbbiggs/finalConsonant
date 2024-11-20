@@ -12,7 +12,7 @@ const StyledNextButton = styled.div`
   border-radius: 50%;
 
   position: absolute;
-  right: 100px;
+  right: 41px;
   bottom: 43px;
 
   display: grid;

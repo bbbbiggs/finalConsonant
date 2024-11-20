@@ -9,6 +9,7 @@ export const StyledTwo = styled.div`
   position: relative;
   background-color: #81e5fd;
   height: 919px;
+  overflow: hidden;
   .quizInstruction {
     color: #000000;
     font-family: "Roboto-Medium";
@@ -34,10 +35,32 @@ export const StyledTwo = styled.div`
       box-sizing: border-box;
       background-color: white;
       margin-right: 43px;
-      display: grid;
-      align-items: center;
-      justify-items: center;
-      position: relative;
+      /* overflow-x: scroll; */
+
+      .slider {
+        width: 1000px;
+        height: 100%;
+        background-color: yellow;
+        display: flex;
+        position: relative;
+      }
+
+      .left1 {
+        left: -360px;
+      }
+      .left2 {
+        left: -720px;
+      }
+
+      .test1 {
+        position: relative;
+        box-sizing: border-box;
+        width: 350px;
+
+        display: grid;
+        align-items: center;
+        justify-items: center;
+      }
 
       .watermelon {
         position: absolute;
@@ -63,6 +86,7 @@ export const StyledTwo = styled.div`
         left: 175px;
       }
     }
+
     .dragArea {
       /* background-color: bisque; */
       display: flex;
@@ -75,7 +99,6 @@ export const StyledTwo = styled.div`
     background-color: #8fcd56;
     position: absolute;
     top: 563px;
-    z-index: 1;
   }
   .cloud {
     position: relative;
@@ -93,30 +116,9 @@ export const StyledTwo = styled.div`
       right: 0;
     }
   }
-  .boardWrapper {
-    position: relative;
-    width: 253px;
-    .boardTitle {
-      position: absolute;
-      top: 33px;
-      left: 46%;
-      transform: translateX(-50%);
-      font-size: 25px;
-    }
-    .wordListWrapper {
-      /* width: 140px; */
-      /* background-color: yellow; */
-      position: absolute;
-      top: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-    }
-  }
 
   .stageWrapper {
     position: relative;
-    z-index: 2;
     display: flex;
     justify-content: center;
     gap: 25px;
@@ -130,7 +132,7 @@ export const StyledTwo = styled.div`
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        color: black;
+        color: white;
         z-index: 1;
         display: none;
       }

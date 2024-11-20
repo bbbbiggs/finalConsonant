@@ -17,6 +17,7 @@ const DraggableImage = (data) => {
       ? `translate3d(${lastTransform.x}px, ${lastTransform.y}px, 0)`
       : "none",
     transition: transform ? "none" : "transform 0.5s ease",
+    clipPath: "none",
   };
 
   useEffect(() => {

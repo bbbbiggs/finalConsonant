@@ -7,9 +7,30 @@
   display: none;
   position: relative;
 }
-.borderAnimation {
+/* .borderAnimation {
   border: 3px outset red;
   animation: borderAnimation 1s infinite;
+}
+
+@keyframes borderAnimation {
+  from {
+    border-color: red;
+  }
+  to {
+    border-color: blue;
+  }
+} */
+
+.borderAnimation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: center;
+  border: 3px outset red;
+  border-radius: 10px;
+  animation: borderAnimation 0.2s infinite alternate;
 }
 
 @keyframes borderAnimation {
@@ -105,5 +126,55 @@
   }
   50% {
     opacity: 0; /* 중간에 깜빡이도록 */
+  }
+}
+
+/* 무지개 보더효과 */
+.rainbow {
+  position: relative;
+  z-index: 0;
+  width: 259px;
+  height: 356px;
+  background-color: beige;
+  border-radius: 5px;
+  overflow: hidden;
+  /* padding: 2rem; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* before, after는 css에서 가상요소를 생성하는 데 사용되며, 해당 태그의 내용 앞 또는 내용 뒤에 위치하는 가상 요소를 나타낸다. */
+.rainbow::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  left: -50%;
+  top: -50%;
+  width: 200%;
+  height: 200%;
+  background-color: #399953;
+  background-repeat: no-repeat;
+  background-size: 50% 50%, 50% 50%;
+  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  background-image: linear-gradient(#399953, #399953),
+    linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33),
+    linear-gradient(#377af5, #377af5);
+  animation: rotate 4s linear infinite;
+}
+
+.rainbow::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 6px;
+  top: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  background: white;
+  border-radius: 5px;
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(1turn);
   }
 }

@@ -3,7 +3,7 @@ import { StyledTwo } from "../assets/styles/two/two.styled";
 import BackButton from "./common/BackButton";
 import TitleAndSubTitle from "./common/TitleAndSubTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareCheck } from "@fortawesome/free-regular-svg-icons";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import DraggableImage from "./common/DraggableImage";
 import { DndContext } from "@dnd-kit/core";
 import DroppableArea from "./common/DroppableArea";
@@ -12,12 +12,14 @@ import { useNavigate } from "react-router-dom";
 import NextPage from "./common/NextPage";
 
 const Two = () => {
+  const nav = useNavigate();
   const [stageCount, setStageCount] = useState(0);
   const fruitStoreArr = ["watermelon", "persimmon"];
   const hospitalArr = ["nurse"];
+  const bookStoreArr = ["book"];
   const [oneStageClear, setOneStageClear] = useState(false);
   // 2개 합칠예정
-  const [stageClear, setStageClear] = useState([false, false, false]);
+  const [sc, setSc] = useState([false, false, false]);
 
   const stageArr = ["fruitStore", "hospital", "bookStore"];
   const [nowStage, setNowStage] = useState("fruitStore"); // 처음엔 과일가게로 설정
@@ -29,42 +31,17 @@ const Two = () => {
   ]);
   const [gameEnd, setGameEnd] = useState(false);
 
-  // const [blockStatus, setBlockStatus] = useState([false, false, false]);
   const [watermelonStatus, setWatermelonStatus] = useState(false);
   const [persimmonStatus, setPersimmonStatus] = useState(false);
   const [nurseStatus, setNurseStatus] = useState(false);
   const [bookStatus, setBookStatus] = useState(false);
 
-  useEffect(() => {
-    if (nowStage === "fruitStore" && stageCount === fruitStoreArr.length) {
-      setOneStageClear(true);
-    } else if (nowStage === "hospital" && stageCount === hospitalArr.length) {
-      setOneStageClear(true);
-    }
-  }, [stageCount]);
-
-  useEffect(() => {
-    // console.log("스테이지바뀜: ", oneStageClear, nowStage);
-    if (oneStageClear === true) {
-      stageArr.map((element, index) => {
-        if (element === nowStage) {
-          setStageClear((prev) => {
-            const newStatus = [...prev];
-            newStatus[index] = true;
-            return newStatus;
-          });
-        }
-      });
-    }
-
-    // if (oneStageClear === true) {
-    //   setStageClear((prev) => {
-    //     const newStatus = [...prev];
-    //     newStatus[0] = true;
-    //     return newStatus;
-    //   });
-    // }
-  }, [oneStageClear]);
+  // 드래그오버시
+  const consonantEnglishArr = ["giyeok", "nieun", "mieum"];
+  // const [isOver, setIsOver] = useState([false, false, false]);
+  const [isOver, setIsOver] = useState(
+    new Array(consonantEnglishArr.length).fill(false)
+  );
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
@@ -80,12 +57,6 @@ const Two = () => {
           newStatus[0] = true;
           return newStatus;
         });
-
-        // setBlockStatus((prevStatus) => {
-        //   const newStatus = [...prevStatus];
-        //   newStatus[0] = "block";
-        //   return newStatus;
-        // });
       } else if (active.id === "persimmon" && over.id === "mieum") {
         console.log("감 정답!");
         setStageCount((stageCount) => stageCount + 1);
@@ -121,13 +92,16 @@ const Two = () => {
         setGameEnd(true); // 게임종료시 실행시키기
       }
     }
+
+    // 초기화시키기
+    setIsOver(new Array(consonantEnglishArr.length).fill(false));
   };
 
   const nextGame = () => {
     setOneStageClear(false);
+    setStageCount(0);
     if (nowStage === "fruitStore") {
       setNowStage("hospital");
-      setStageCount(0);
 
       setWatermelonStatus(false);
       setPersimmonStatus(false);
@@ -138,11 +112,60 @@ const Two = () => {
     }
   };
 
-  const nav = useNavigate();
+  const handleDragOver = (event) => {
+    const { over } = event;
+
+    // 처음엔 초기화
+    setIsOver(new Array(consonantEnglishArr.length).fill(false));
+
+    // over.id === "giyeok"
+    if (over) {
+      consonantEnglishArr.map((element, index) => {
+        if (element === over.id) {
+          // console.log("index: ", index);
+          setIsOver((prev) => {
+            const status = [...prev];
+            status[index] = true;
+            return status;
+          });
+          return index;
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (nowStage === "fruitStore" && stageCount === fruitStoreArr.length) {
+      setOneStageClear(true);
+    } else if (nowStage === "hospital" && stageCount === hospitalArr.length) {
+      setOneStageClear(true);
+    } else if (nowStage === "bookStore" && stageCount === bookStoreArr.length) {
+      setOneStageClear(true);
+    }
+  }, [stageCount]);
+
+  useEffect(() => {
+    // console.log("스테이지바뀜: ", oneStageClear, nowStage);
+    if (oneStageClear === true) {
+      stageArr.map((element, index) => {
+        if (element === nowStage) {
+          setSc((prev) => {
+            const newStatus = [...prev];
+            newStatus[index] = true;
+            return newStatus;
+          });
+        }
+      });
+    }
+  }, [oneStageClear]);
+
+  useEffect(() => {
+    console.log("현재단계:", nowStage);
+  }, [nowStage]);
 
   return (
     <StyledTwo>
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
         <div className="footerBackground"></div>
         <div className="cloud">
           <img
@@ -166,7 +189,7 @@ const Two = () => {
         </div>
         <BackButton />
         {/* 정답을 맞추면, clear 상태일때, */}
-        {oneStageClear && <NextButton onclick={() => nextGame()} />}
+        {oneStageClear && !gameEnd && <NextButton onclick={() => nextGame()} />}
         {/* 마지막 퀴즈를 맞추면 다음페이지 버튼 */}
         {gameEnd && <NextPage onclick={() => nav("/")} />}
 
@@ -176,7 +199,47 @@ const Two = () => {
         </p>
         <div className="quizWrapper">
           <div className="questionArea">
-            {nowStage === "fruitStore" && (
+            <div
+              className={`slider ${
+                nowStage === "hospital"
+                  ? "left1"
+                  : nowStage === "bookStore"
+                  ? "left2"
+                  : ""
+              }`}
+            >
+              <div className="test1">
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/images/two/quizImg/fruitStore.png`}
+                  alt=""
+                  draggable={false}
+                />
+                <DraggableImage
+                  src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/watermelon.png`}
+                  className={`watermelon ${hiddenStatus[0] ? "hidden" : ""}`}
+                  dragImgId={"watermelon"}
+                />
+                <DraggableImage
+                  src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/persimmon.png`}
+                  className={`persimmon ${hiddenStatus[1] ? "hidden" : ""}`}
+                  dragImgId={"persimmon"}
+                />
+              </div>
+              <div className="test1">
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/images/two/quizImg/hospital.png`}
+                  alt=""
+                  draggable={false}
+                />
+                <DraggableImage
+                  src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/nurse.png`}
+                  className={`nurse ${hiddenStatus[2] ? "hidden" : ""}`}
+                  dragImgId={"nurse"}
+                />
+              </div>
+            </div>
+
+            {/* {nowStage === "fruitStore" && (
               <>
                 <img
                   src={`${process.env.PUBLIC_URL}/assets/images/two/quizImg/fruitStore.png`}
@@ -222,7 +285,7 @@ const Two = () => {
                   dragImgId={"book"}
                 />
               </>
-            )}
+            )} */}
           </div>
           <div className="dragArea">
             <DroppableArea
@@ -230,16 +293,19 @@ const Two = () => {
               consonantEnglish={"giyeok"}
               watermelonStatus={watermelonStatus}
               bookStatus={bookStatus}
+              borderStatus={isOver[0]}
             />
             <DroppableArea
               consonant={"ㄴ"}
               consonantEnglish={"nieun"}
               nurseStatus={nurseStatus}
+              borderStatus={isOver[1]}
             />
             <DroppableArea
               consonant={"ㅁ"}
               consonantEnglish={"mieum"}
               persimmonStatus={persimmonStatus}
+              borderStatus={isOver[2]}
             />
           </div>
         </div>
@@ -248,9 +314,9 @@ const Two = () => {
             <div
               key={element}
               // className="stageImgWrapper"
-              className={`stageImgWrapper ${stageClear[index] ? "clear" : ""}`}
+              className={`stageImgWrapper ${sc[index] ? "clear" : ""}`}
             >
-              <FontAwesomeIcon icon={faSquareCheck} />
+              <FontAwesomeIcon icon={faCircleCheck} />
               <img
                 src={`${process.env.PUBLIC_URL}/assets/images/two/store/${element}.jpeg`}
                 alt=""
