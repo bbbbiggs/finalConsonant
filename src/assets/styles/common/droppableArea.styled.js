@@ -22,4 +22,25 @@ export const StyledDroppableArea = styled.div`
     transform: translateX(-50%);
     text-align: center;
   }
+  @keyframes shake {
+    0% {
+      transform: rotate(0deg) translateX(0);
+    }
+    25% {
+      transform: rotate(-5deg) translateX(-5px);
+    }
+    50% {
+      transform: rotate(5deg) translateX(5px);
+    }
+    75% {
+      transform: rotate(-5deg) translateX(-5px);
+    }
+    100% {
+      transform: rotate(0deg) translateX(0);
+    }
+  }
+
+  &.lightShake {
+    animation: shake 0.5s ease-in-out;
+  }
 `;

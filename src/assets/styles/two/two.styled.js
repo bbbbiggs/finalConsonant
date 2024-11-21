@@ -35,31 +35,42 @@ export const StyledTwo = styled.div`
       box-sizing: border-box;
       background-color: white;
       margin-right: 43px;
-      /* overflow-x: scroll; */
+      /* position: relative;
+      display: grid;
+      align-items: center;
+      justify-content: center; */
 
-      .slider {
-        width: 1000px;
-        height: 100%;
-        background-color: yellow;
+      .swiper {
         display: flex;
         position: relative;
-      }
+        .store1,
+        .store2,
+        .store3 {
+          flex-shrink: 0;
+          width: 330px;
+          height: 410px;
+          box-sizing: border-box;
 
-      .left1 {
-        left: -360px;
-      }
-      .left2 {
-        left: -720px;
-      }
+          display: grid;
+          align-items: center;
+          justify-content: center;
+          transition: left 1s ease-in-out, opacity 1s ease-out;
+        }
 
-      .test1 {
-        position: relative;
-        box-sizing: border-box;
-        width: 350px;
+        .store1 {
+          left: 0;
+        }
 
-        display: grid;
-        align-items: center;
-        justify-items: center;
+        .store2 {
+          left: 0;
+          position: relative;
+          opacity: 0;
+        }
+        .store3 {
+          left: 330px;
+          position: absolute;
+          opacity: 0;
+        }
       }
 
       .watermelon {

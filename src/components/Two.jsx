@@ -43,6 +43,10 @@ const Two = () => {
     new Array(consonantEnglishArr.length).fill(false)
   );
 
+  const [failStatus, setFailStatus] = useState(
+    new Array(consonantEnglishArr.length).fill(false)
+  );
+
   const handleDragEnd = (event) => {
     const { active, over } = event;
     // active 드래그할 요소 / over 드래그할영역
@@ -90,6 +94,24 @@ const Two = () => {
         setBookStatus(true);
 
         setGameEnd(true); // 게임종료시 실행시키기
+      } else {
+        const index = consonantEnglishArr.findIndex(
+          (element) => over.id === element
+        );
+        if (index !== -1) {
+          setFailStatus((prev) => {
+            const status = [...prev];
+            status[index] = true;
+            return status;
+          });
+          setTimeout(() => {
+            setFailStatus((prev) => {
+              const status = [...prev];
+              status[index] = false;
+              return status;
+            });
+          }, 500);
+        }
       }
     }
 
@@ -105,10 +127,18 @@ const Two = () => {
 
       setWatermelonStatus(false);
       setPersimmonStatus(false);
+
+      document.querySelector(".store1").style.opacity = 0;
+      document.querySelector(".store2").style.opacity = 1;
+      document.querySelector(".store2").style.left = "-330px";
     } else if (nowStage === "hospital") {
       setNowStage("bookStore");
 
       setNurseStatus(false);
+
+      document.querySelector(".store2").style.opacity = 0;
+      document.querySelector(".store3").style.opacity = 1;
+      document.querySelector(".store3").style.left = "0px";
     }
   };
 
@@ -199,16 +229,8 @@ const Two = () => {
         </p>
         <div className="quizWrapper">
           <div className="questionArea">
-            <div
-              className={`slider ${
-                nowStage === "hospital"
-                  ? "left1"
-                  : nowStage === "bookStore"
-                  ? "left2"
-                  : ""
-              }`}
-            >
-              <div className="test1">
+            <div className="swiper">
+              <div className="store1">
                 <img
                   src={`${process.env.PUBLIC_URL}/assets/images/two/quizImg/fruitStore.png`}
                   alt=""
@@ -225,7 +247,7 @@ const Two = () => {
                   dragImgId={"persimmon"}
                 />
               </div>
-              <div className="test1">
+              <div className="store2">
                 <img
                   src={`${process.env.PUBLIC_URL}/assets/images/two/quizImg/hospital.png`}
                   alt=""
@@ -237,8 +259,19 @@ const Two = () => {
                   dragImgId={"nurse"}
                 />
               </div>
+              <div className="store3">
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/images/two/quizImg/bookStore.png`}
+                  alt=""
+                  draggable={false}
+                />
+                <DraggableImage
+                  src={`${process.env.PUBLIC_URL}/assets/images/two/textImg/book.png`}
+                  className={`book ${hiddenStatus[3] ? "hidden" : ""}`}
+                  dragImgId={"book"}
+                />
+              </div>
             </div>
-
             {/* {nowStage === "fruitStore" && (
               <>
                 <img
@@ -257,8 +290,8 @@ const Two = () => {
                   dragImgId={"persimmon"}
                 />
               </>
-            )}
-            {nowStage === "hospital" && (
+            )} */}
+            {/* {nowStage === "hospital" && (
               <>
                 <img
                   src={`${process.env.PUBLIC_URL}/assets/images/two/quizImg/hospital.png`}
@@ -294,18 +327,21 @@ const Two = () => {
               watermelonStatus={watermelonStatus}
               bookStatus={bookStatus}
               borderStatus={isOver[0]}
+              fail={failStatus[0]}
             />
             <DroppableArea
               consonant={"ㄴ"}
               consonantEnglish={"nieun"}
               nurseStatus={nurseStatus}
               borderStatus={isOver[1]}
+              fail={failStatus[1]}
             />
             <DroppableArea
               consonant={"ㅁ"}
               consonantEnglish={"mieum"}
               persimmonStatus={persimmonStatus}
               borderStatus={isOver[2]}
+              fail={failStatus[2]}
             />
           </div>
         </div>

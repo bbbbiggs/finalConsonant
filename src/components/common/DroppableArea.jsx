@@ -9,7 +9,10 @@ const DroppableArea = (data) => {
   });
   // console.log(data.borderStatus);
   return (
-    <StyledDroppableArea ref={setNodeRef}>
+    <StyledDroppableArea
+      ref={setNodeRef}
+      className={data.fail ? "lightShake" : ""}
+    >
       <div className={data.borderStatus ? "rainbow" : ""}>
         <img
           // onDragOver={(e) => e.preventDefault()}
